@@ -96,7 +96,7 @@ BrowserApplication::BrowserApplication(int &argc, char **argv)
 {
     QCoreApplication::setOrganizationDomain(QLatin1String("arora-browser.org"));
     QCoreApplication::setApplicationName(QLatin1String("Arora"));
-    QString version = QLatin1String("0.8.0");
+    QString version = QLatin1String("0.9.0");
     QString gitVersion = QLatin1String(GITCHANGENUMBER);
     if (gitVersion != QLatin1String("0")
         && !gitVersion.isEmpty())
@@ -314,6 +314,9 @@ void BrowserApplication::loadSettings()
     defaultSettings->setAttribute(QWebSettings::PluginsEnabled, settings.value(QLatin1String("enablePlugins"), true).toBool());
     defaultSettings->setAttribute(QWebSettings::AutoLoadImages, settings.value(QLatin1String("enableImages"), true).toBool());
     defaultSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, settings.value(QLatin1String("enableInspector"), false).toBool());
+#ifdef WEBKIT_TRUNK
+    defaultSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
+#endif
 
     QUrl url = settings.value(QLatin1String("userStyleSheet")).toUrl();
     defaultSettings->setUserStyleSheetUrl(url);
