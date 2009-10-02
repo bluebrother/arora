@@ -101,6 +101,74 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>AdBlockBlockedNetworkReply</name>
+    <message>
+        <source>Blocked by AdBlockRule: %1</source>
+        <translation>Blokkert av AdBlockRule:%1</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockDialog</name>
+    <message>
+        <source>Add Custom Rule</source>
+        <translation>Legg til regel</translation>
+    </message>
+    <message>
+        <source>Learn more about writing rules...</source>
+        <translation>Lær mer om å skrive regler...</translation>
+    </message>
+    <message>
+        <source>Update Subscription</source>
+        <translation>Oppdater abonement</translation>
+    </message>
+    <message>
+        <source>Browse Subscriptions...</source>
+        <translation>Bla igjennom abonementer...</translation>
+    </message>
+    <message>
+        <source>Remove Subscription</source>
+        <translation>Fjern abonement</translation>
+    </message>
+    <message>
+        <source>AdBlock Configuration</source>
+        <translation>AdBlock konfigurasjon</translation>
+    </message>
+    <message>
+        <source>Enable AdBlock</source>
+        <translation>Skru på AdBlock</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Handling</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockManager</name>
+    <message>
+        <source>Custom Rules</source>
+        <translation>Regel</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockModel</name>
+    <message>
+        <source>Rule</source>
+        <translation>Regel</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockSchemeAccessHandler</name>
+    <message>
+        <source>Subscribe?</source>
+        <translation>Abonemer?</translation>
+    </message>
+    <message>
+        <source>Subscribe to this AdBlock subscription?
+%1</source>
+        <translation>Abonemer på dette AdBlock abonementet? %1</translation>
+    </message>
+</context>
+<context>
     <name>AddBookmarkDialog</name>
     <message>
         <source>Add Bookmark</source>
@@ -121,6 +189,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Add Folder</source>
         <translation>Legg til mappe</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillDialog</name>
+    <message>
+        <source>Form Passwords</source>
+        <translation>Passord</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Fjern</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>Fjern alle</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillManager</name>
+    <message>
+        <source>&lt;b&gt;Would you like to save this password?&lt;/b&gt;&lt;br&gt;         To review passwords you have saved and remove them, open the AutoFill pane of preferences.</source>
+        <translation>&lt;b&gt;Vil du lagre dette passordet?&lt;/b&gt;&lt;br&gt;         Du kan se hvilke passord du har lagret og eventuelt slette dem under Egenskaper.</translation>
+    </message>
+    <message>
+        <source>Never for this site</source>
+        <translation>Aldri for denne siden</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>Ikke nå</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillModel</name>
+    <message>
+        <source>WebSite</source>
+        <translation>Nettside</translation>
+    </message>
+    <message>
+        <source>User Name</source>
+        <translation>Brukernavn</translation>
     </message>
 </context>
 <context>
@@ -313,7 +422,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bookmarks</source>
-        <translation>Bokmerker</translation>
+        <translation type="obsolete">Bokmerker</translation>
     </message>
 </context>
 <context>
@@ -338,7 +447,11 @@ Er du sikker på at du vil avslutte Arora?</translation>
     </message>
     <message>
         <source>The saved session will not be restored because Arora crashed while trying to restore this session.</source>
-        <translation>Den lagrede økten blir ikke gjennoprettet siden det førte til at Arora krasjet.</translation>
+        <translation type="obsolete">Den lagrede økten blir ikke gjennoprettet siden det førte til at Arora krasjet.</translation>
+    </message>
+    <message>
+        <source>Arora crashed while trying to restore this session.  Should I try again?</source>
+        <translation>Arora kræsjet forrige gang vi prøvde å gjennoprette denne siden. Skal vi prøve igjenn?</translation>
     </message>
 </context>
 <context>
@@ -651,7 +764,7 @@ Vil du laste alle sider på nytt?</translation>
     </message>
     <message>
         <source>Prefere&amp;nces...</source>
-        <translation>&amp;Instillinger...</translation>
+        <translation type="obsolete">&amp;Instillinger...</translation>
     </message>
     <message>
         <source>Show Menu Bar</source>
@@ -725,7 +838,59 @@ Vil du laste alle sider på nytt?</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;When private browsing is turned on, some actions concerning your privacy will be disabled:&lt;ul&gt;&lt;li&gt; Webpages are not added to the history.&lt;/li&gt;&lt;li&gt; Items are automatically removed from the Downloads window.&lt;/li&gt;&lt;li&gt; New cookies are not stored, current cookies can&apos;t be accessed.&lt;/li&gt;&lt;li&gt; Site icons won&apos;t be stored, session won&apos;t be saved.&lt;/li&gt;&lt;li&gt; Searches are not added to the pop-up menu in the search box.&lt;/li&gt;&lt;li&gt; No new network cache is written to disk.&lt;/li&gt;&lt;/ul&gt;Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Noen handlinger relatert til dine personlige opplysninger vil bli deaktiverte når privat surfing er skrudd på:&lt;ul&gt;&lt;li&gt; Nettsider blir ikke lagt til i historien.&lt;/li&gt;&lt;li&gt; Elementer blir automatisk fjernet fra Nedlastninger vinduet.&lt;/li&gt;&lt;li&gt; Nye informasjonskapsler blir ikke lagret og gamle kan ikke åpnes.&lt;/li&gt;&lt;li&gt; Ikoner og økter blir ikke lagret.&lt;/li&gt;&lt;li&gt; Søk blir ikke lagt til i sprett-opp menyen i søkeboksen.&lt;/li&gt;&lt;/ul&gt;Du kan fremdeles klikke Tilbake og Fram intill du lukker vinduet.</translation>
+        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Noen handlinger relatert til dine personlige opplysninger vil bli deaktiverte når privat surfing er skrudd på:&lt;ul&gt;&lt;li&gt; Nettsider blir ikke lagt til i historien.&lt;/li&gt;&lt;li&gt; Elementer blir automatisk fjernet fra Nedlastninger vinduet.&lt;/li&gt;&lt;li&gt; Nye informasjonskapsler blir ikke lagret og gamle kan ikke åpnes.&lt;/li&gt;&lt;li&gt; Ikoner og økter blir ikke lagret.&lt;/li&gt;&lt;li&gt; Søk blir ikke lagt til i sprett-opp menyen i søkeboksen.&lt;/li&gt;&lt;/ul&gt;Du kan fremdeles klikke Tilbake og Fram intill du lukker vinduet.</translation>
+    </message>
+    <message>
+        <source>Options...</source>
+        <translation>Alternativer...</translation>
+    </message>
+    <message>
+        <source>Configure Search Engines...</source>
+        <translation>Konfigurer søkemotorer...</translation>
+    </message>
+    <message>
+        <source>&amp;Ad Block...</source>
+        <translation>&amp;AdBlock...</translation>
+    </message>
+    <message>
+        <source>When private browsing is turned on, some actions concerning your privacy will be disabled:</source>
+        <translation>Så lenge privat surfing er skrudd på, vil noen handlinger være skrudd av:</translation>
+    </message>
+    <message>
+        <source>Webpages are not added to the history.</source>
+        <translation>Nettsider blir ikke lagt til i historien.</translation>
+    </message>
+    <message>
+        <source>Items are automatically removed from the Downloads window.</source>
+        <translation>Nedlastninger blir automatisk fjernet fra Nedlastninger vinduet.</translation>
+    </message>
+    <message>
+        <source>New cookies are not stored, current cookies can&apos;t be accessed.</source>
+        <translation>Nye informasjonskapsler blir ikke lagret og eksisterende informasjonskapsler kan ikke brukes.</translation>
+    </message>
+    <message>
+        <source>Site icons won&apos;t be stored.</source>
+        <translation>Nettsideikoner blir ikke lagret.</translation>
+    </message>
+    <message>
+        <source>Session won&apos;t be saved.</source>
+        <translation>Sessjoner blir ikke lagret.</translation>
+    </message>
+    <message>
+        <source>Searches are not added to the pop-up menu in the search box.</source>
+        <translation>Søk blir ikke lagt til i søkemenyen.</translation>
+    </message>
+    <message>
+        <source>No new network cache is written to disk.</source>
+        <translation>Nettverkshurtiglageret blir ikke skrevet til platelageret.</translation>
+    </message>
+    <message>
+        <source>Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
+        <translation>Så lenge du ikke lukker vinduet kan du fremdeles klikke Fram og Tilbake for å se sider du har åpnet.</translation>
+    </message>
+    <message>
+        <source>Private Browsing</source>
+        <translation>Privat surfing</translation>
     </message>
 </context>
 <context>
@@ -1239,7 +1404,11 @@ Er du sikker på at du vil avslutte?</translation>
     </message>
     <message>
         <source>No translation files are installed.</source>
-        <translation>Ingen oversettelses filer er installert.</translation>
+        <translation type="obsolete">Ingen oversettelses filer er installert.</translation>
+    </message>
+    <message>
+        <source>No translation files are installed at %1.</source>
+        <translation>Ingen oversettelsesfiler er installert i %1.</translation>
     </message>
 </context>
 <context>
@@ -1873,6 +2042,54 @@ Vil du ignorere disse feilene?&lt;qt&gt;</translation>
         <source>Choose Directory...</source>
         <translation>Velg katalog...</translation>
     </message>
+    <message>
+        <source>A cookie session ends:</source>
+        <translation>En informasjonskapselsesjon slutter:</translation>
+    </message>
+    <message>
+        <source>When I exit the application</source>
+        <translation>Når jeg skruv av programmet</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 dag</translation>
+    </message>
+    <message>
+        <source>2 days</source>
+        <translation>2 dager</translation>
+    </message>
+    <message>
+        <source>3 days</source>
+        <translation>3 dager</translation>
+    </message>
+    <message>
+        <source>7 days</source>
+        <translation>7 dager</translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation>30 dager</translation>
+    </message>
+    <message>
+        <source>AutoFill</source>
+        <translation>AutoFill</translation>
+    </message>
+    <message>
+        <source>AutoFill web forms:</source>
+        <translation>AutoFill skjemaer:</translation>
+    </message>
+    <message>
+        <source>User names and passwords</source>
+        <translation>Brukernavn og passord</translation>
+    </message>
+    <message>
+        <source>Edit...</source>
+        <translation>Rediger...</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Bla igjennom...</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1887,6 +2104,10 @@ Vil du ignorere disse feilene?&lt;qt&gt;</translation>
     <message>
         <source>Choose Directory</source>
         <translation>Velg katalog</translation>
+    </message>
+    <message>
+        <source>Choose CSS File</source>
+        <translation>Velg CSS fil</translation>
     </message>
 </context>
 <context>
@@ -1905,11 +2126,11 @@ Vil du ignorere disse feilene?&lt;qt&gt;</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Vis</translation>
+        <translation type="obsolete">&amp;Vis</translation>
     </message>
     <message>
         <source>&amp;Wrap lines</source>
-        <translation>&amp;Bryt linjer</translation>
+        <translation type="obsolete">&amp;Bryt linjer</translation>
     </message>
     <message>
         <source>Source of Page </source>
@@ -2058,7 +2279,7 @@ Vil du virkelig lukke denne siden?
     </message>
     <message>
         <source>Configure Search Engines...</source>
-        <translation>Konfigurer søkemotorer...</translation>
+        <translation type="obsolete">Konfigurer søkemotorer...</translation>
     </message>
 </context>
 <context>
@@ -2177,6 +2398,10 @@ Vil du virkelig lukke denne siden?
     <message>
         <source>Type in a name for the engine</source>
         <translation>Gi søkemotoren et navn</translation>
+    </message>
+    <message>
+        <source>Block Image</source>
+        <translation>Blokker bilde</translation>
     </message>
 </context>
 <context>

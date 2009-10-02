@@ -187,6 +187,7 @@ void CookieJar::loadSettings()
 
     m_loaded = true;
     m_filterTrackingCookies = settings.value(QLatin1String("filterTrackingCookies"), m_filterTrackingCookies).toBool();
+    m_sessionLength = settings.value(QLatin1String("sessionLength"), -1).toInt();
     emit cookiesChanged();
 }
 
@@ -219,6 +220,7 @@ void CookieJar::save()
     settings.setValue(QLatin1String("keepCookiesUntil"), QLatin1String(keepPolicyEnum.valueToKey(m_keepCookies)));
 
     settings.setValue(QLatin1String("filterTrackingCookies"), m_filterTrackingCookies);
+    settings.setValue(QLatin1String("sessionLength"), m_sessionLength);
 }
 
 void CookieJar::purgeOldCookies()
@@ -266,6 +268,11 @@ bool CookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const
         QDateTime soon = QDateTime::currentDateTime();
         soon = soon.addDays(90);
         foreach (QNetworkCookie cookie, cookieList) {
+            if (cookie.isSessionCookie() && m_sessionLength != -1) {
+                QDateTime now = QDateTime::currentDateTime();
+                cookie.setExpirationDate(now.addDays(m_sessionLength));
+            }
+
             QList<QNetworkCookie> lst;
             if (!(m_filterTrackingCookies && cookie.name().startsWith("__utm"))) {
 
@@ -287,7 +294,7 @@ bool CookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const
                         QList<QNetworkCookie> cookies = allCookies();
                         QList<QNetworkCookie>::Iterator it = cookies.begin(),
                                    end = cookies.end();
-                        for ( ; it != end; ++it) {
+                        for (; it != end; ++it) {
                             // does this cookie already exist?
                             if (cookie.name() == it->name() &&
                                 cookie.domain() == it->domain() &&

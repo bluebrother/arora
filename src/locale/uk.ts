@@ -84,14 +84,83 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>AdBlockBlockedNetworkReply</name>
+    <message>
+        <source>Blocked by AdBlockRule: %1</source>
+        <translation>AdBlockRule заборонив: %1</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockDialog</name>
+    <message>
+        <source>Add Custom Rule</source>
+        <translation>Додати спеціальне правило</translation>
+    </message>
+    <message>
+        <source>Learn more about writing rules...</source>
+        <translation>Дізнатись детальніше щодо написання правил...</translation>
+    </message>
+    <message>
+        <source>Update Subscription</source>
+        <translation>Оновити підписку</translation>
+    </message>
+    <message>
+        <source>Browse Subscriptions...</source>
+        <translation>Переглянути підписки...</translation>
+    </message>
+    <message>
+        <source>Remove Subscription</source>
+        <translation>Вилучити підписку</translation>
+    </message>
+    <message>
+        <source>AdBlock Configuration</source>
+        <translation>Налаштування AdBlock</translation>
+    </message>
+    <message>
+        <source>Enable AdBlock</source>
+        <translation>Увімкнути AdBlock</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Дія</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockManager</name>
+    <message>
+        <source>Custom Rules</source>
+        <translation>Спеціальні правила</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockModel</name>
+    <message>
+        <source>Rule</source>
+        <translation>Правило</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockSchemeAccessHandler</name>
+    <message>
+        <source>Subscribe?</source>
+        <translation>Підписатись?</translation>
+    </message>
+    <message>
+        <source>Subscribe to this AdBlock subscription?
+%1</source>
+        <translation>Підписатись до цієї підписки AdBlock?
+%1</translation>
+    </message>
+</context>
+<context>
     <name>AddBookmarkDialog</name>
     <message>
         <source>Add Bookmark</source>
-        <translation>Додати закладку</translation>
+        <translation>Закласти</translation>
     </message>
     <message>
         <source>Type a name for the bookmark, and choose where to keep it.</source>
-        <translation>Введіть назву закладинки та виберіть куди її додати.</translation>
+        <translation>Введіть назву закладки та виберіть куди її додати.</translation>
     </message>
     <message>
         <source>Url</source>
@@ -104,6 +173,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Add Folder</source>
         <translation>Додати теку</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillDialog</name>
+    <message>
+        <source>Form Passwords</source>
+        <translation>Форма паролів</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Вилучити</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>Вилучити всі</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillManager</name>
+    <message>
+        <source>&lt;b&gt;Would you like to save this password?&lt;/b&gt;&lt;br&gt;         To review passwords you have saved and remove them, open the AutoFill pane of preferences.</source>
+        <translation>&lt;b&gt;Бажаєте зберегти цей пароль?&lt;/b&gt;&lt;br&gt;         Щоб переглядати і вилучати збережені паролі, відкрийте налаштування автоматичного заповнення.</translation>
+    </message>
+    <message>
+        <source>Never for this site</source>
+        <translation>Ніколи для цього сайта</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>Не зараз</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillModel</name>
+    <message>
+        <source>WebSite</source>
+        <translation>Сайт</translation>
+    </message>
+    <message>
+        <source>User Name</source>
+        <translation>Ім&apos;я користувача</translation>
     </message>
 </context>
 <context>
@@ -300,7 +410,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Add Bookmark...</source>
-        <translation>Додати закладку...</translation>
+        <translation>Закласти...</translation>
     </message>
     <message>
         <source>Add Folder...</source>
@@ -308,7 +418,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bookmarks</source>
-        <translation>Закладки</translation>
+        <translation type="obsolete">Закладки</translation>
     </message>
 </context>
 <context>
@@ -321,7 +431,7 @@ p, li { white-space: pre-wrap; }
         <source>There are %1 windows and %2 tabs open
 Do you want to quit anyway?</source>
         <translation>Відкрито %1 вікон та %2 вкладок
-Ви все одно бажаєте вийти?</translation>
+Бажаєте вийти попри все?</translation>
     </message>
     <message>
         <source>Restore failed</source>
@@ -329,7 +439,11 @@ Do you want to quit anyway?</source>
     </message>
     <message>
         <source>The saved session will not be restored because Arora crashed while trying to restore this session.</source>
-        <translation>Збережений сеанс не буде відновлена, оскільки Arora аварійно завершується при спробі відновити її.</translation>
+        <translation type="obsolete">Збережений сеанс не буде відновлена, оскільки Arora аварійно завершується при спробі відновити її.</translation>
+    </message>
+    <message>
+        <source>Arora crashed while trying to restore this session.  Should I try again?</source>
+        <translation>Arora зазнала краху протягом відновлення цього сеансу.  Спробувати ще раз?</translation>
     </message>
 </context>
 <context>
@@ -380,7 +494,7 @@ Do you want to quit anyway?</source>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Редагувати</translation>
+        <translation>&amp;Правка</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -416,7 +530,7 @@ Do you want to quit anyway?</source>
     </message>
     <message>
         <source>Prefere&amp;nces...</source>
-        <translation>&amp;Налаштування...</translation>
+        <translation type="obsolete">&amp;Налаштування...</translation>
     </message>
     <message>
         <source>Ctrl+,</source>
@@ -424,7 +538,7 @@ Do you want to quit anyway?</source>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Переглянути</translation>
+        <translation>&amp;Огляд</translation>
     </message>
     <message>
         <source>Show Menu Bar</source>
@@ -504,7 +618,7 @@ Do you want to quit anyway?</source>
     </message>
     <message>
         <source>Add Bookmark...</source>
-        <translation>Додати закладку...</translation>
+        <translation>Закласти...</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -708,7 +822,59 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;When private browsing is turned on, some actions concerning your privacy will be disabled:&lt;ul&gt;&lt;li&gt; Webpages are not added to the history.&lt;/li&gt;&lt;li&gt; Items are automatically removed from the Downloads window.&lt;/li&gt;&lt;li&gt; New cookies are not stored, current cookies can&apos;t be accessed.&lt;/li&gt;&lt;li&gt; Site icons won&apos;t be stored, session won&apos;t be saved.&lt;/li&gt;&lt;li&gt; Searches are not added to the pop-up menu in the search box.&lt;/li&gt;&lt;li&gt; No new network cache is written to disk.&lt;/li&gt;&lt;/ul&gt;Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Коли увімкнуто приватне переглядання, деякі дії стосовно вашої приватності будуть вимкнуті:&lt;ul&gt;&lt;li&gt; Сторінки не реєструються в журналі.&lt;/li&gt;&lt;li&gt; Звантаження автоматично вилучатимуться зі списку.&lt;/li&gt;&lt;li&gt; Нові куки не зберігатимуться, поточні куки будуть недоступні.&lt;/li&gt;&lt;li&gt; Піктограми сайтів не зберігатимуться, сеанси також.&lt;/li&gt;&lt;li&gt; Пошуки не додаватимуться до виринного меню в коробці пошуку.&lt;/li&gt;&lt;li&gt; Мережевий кеш буде вимкнено.&lt;/li&gt;&lt;/ul&gt;Допоки не закриті вікна, ви можете продовжувати натискати кнопки Назад і Вперед, щоб повертатись до сторінок, які ви повідкривали.</translation>
+        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Коли увімкнуто приватне переглядання, деякі дії стосовно вашої приватності будуть вимкнуті:&lt;ul&gt;&lt;li&gt; Сторінки не реєструються в журналі.&lt;/li&gt;&lt;li&gt; Звантаження автоматично вилучатимуться зі списку.&lt;/li&gt;&lt;li&gt; Нові куки не зберігатимуться, поточні куки будуть недоступні.&lt;/li&gt;&lt;li&gt; Піктограми сайтів не зберігатимуться, сеанси також.&lt;/li&gt;&lt;li&gt; Пошуки не додаватимуться до виринного меню в коробці пошуку.&lt;/li&gt;&lt;li&gt; Мережевий кеш буде вимкнено.&lt;/li&gt;&lt;/ul&gt;Допоки не закриті вікна, ви можете продовжувати натискати кнопки Назад і Вперед, щоб повертатись до сторінок, які ви повідкривали.</translation>
+    </message>
+    <message>
+        <source>Options...</source>
+        <translation>Варіанти...</translation>
+    </message>
+    <message>
+        <source>Configure Search Engines...</source>
+        <translation>Налаштувати рушії пошуку...</translation>
+    </message>
+    <message>
+        <source>&amp;Ad Block...</source>
+        <translation>&amp;Ad Block...</translation>
+    </message>
+    <message>
+        <source>When private browsing is turned on, some actions concerning your privacy will be disabled:</source>
+        <translation>Коли приватне переглядання ввімкнуто, деякі дії, стосовно ваших приватних вподобань, буде вимкнуто:</translation>
+    </message>
+    <message>
+        <source>Webpages are not added to the history.</source>
+        <translation>Сторінки не записуються в журналі.</translation>
+    </message>
+    <message>
+        <source>Items are automatically removed from the Downloads window.</source>
+        <translation>Пункти звантажень автоматично вилучаються з вікна звантажень.</translation>
+    </message>
+    <message>
+        <source>New cookies are not stored, current cookies can&apos;t be accessed.</source>
+        <translation>Нові куки не зберігаються, і їх неможливо дозволити.</translation>
+    </message>
+    <message>
+        <source>Site icons won&apos;t be stored.</source>
+        <translation>Піктограми сайтів не будуть зберігатись.</translation>
+    </message>
+    <message>
+        <source>Session won&apos;t be saved.</source>
+        <translation>Сеанс не буде зберігатись.</translation>
+    </message>
+    <message>
+        <source>Searches are not added to the pop-up menu in the search box.</source>
+        <translation>Пошуки не долучаються до виринного меню в коробці пошуку.</translation>
+    </message>
+    <message>
+        <source>No new network cache is written to disk.</source>
+        <translation>Новий мережевий кеш не зберігається на диск.</translation>
+    </message>
+    <message>
+        <source>Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
+        <translation>Ви можете натискати кнопки Назад та Вперед, щоб повертатись до сторінок, котрі ви повідкривали, поки не ви не закриєте саме вікно.</translation>
+    </message>
+    <message>
+        <source>Private Browsing</source>
+        <translation>Приватне переглядання</translation>
     </message>
 </context>
 <context>
@@ -880,7 +1046,7 @@ Do you want to reload all pages?</source>
     <name>CookiesExceptionsDialog</name>
     <message>
         <source>Cookie Exceptions</source>
-        <translation>Винятки куків</translation>
+        <translation>Винятки куки</translation>
     </message>
     <message>
         <source>New Exception</source>
@@ -1118,7 +1284,7 @@ Do you want to reload all pages?</source>
         <source>There are %1 downloads in progress
 Do you want to quit anyway?</source>
         <translation>Звантажень в поступі: %1
-Ви все одно бажаєте вийти?</translation>
+Бажаєте вийти попри все?</translation>
     </message>
     <message numerus="yes">
         <source>%n minutes remaining</source>
@@ -1287,7 +1453,11 @@ Do you want to quit anyway?</source>
     </message>
     <message>
         <source>No translation files are installed.</source>
-        <translation>Не встановлено файли перекладів.</translation>
+        <translation type="obsolete">Не встановлено файли перекладів.</translation>
+    </message>
+    <message>
+        <source>No translation files are installed at %1.</source>
+        <translation>Немає файлів перекладів у %1.</translation>
     </message>
 </context>
 <context>
@@ -1450,7 +1620,7 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     </message>
     <message>
         <source>Comma-separated list of keywords that may be entered in the location barfollowed by search terms to search with this engine</source>
-        <translation>Список відокремлених комами ключевих слів, які можна ввести для пошуку термінів з цим рушієм</translation>
+        <translation>Список відокремлених комами ключових слів, які можна ввести для пошуку термінів з цим рушієм</translation>
     </message>
     <message>
         <source>Name</source>
@@ -1677,7 +1847,7 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     </message>
     <message>
         <source>In a new window</source>
-        <translation>В новому вікні</translation>
+        <translation>У новому вікні</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -1685,7 +1855,7 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     </message>
     <message>
         <source>Ask for a destination each time</source>
-        <translation>Запитувати куди зберігати кожного разу</translation>
+        <translation>Запитувати кожного разу, куди зберігати</translation>
     </message>
     <message>
         <source>Use this destination:</source>
@@ -1753,7 +1923,7 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     </message>
     <message>
         <source>Only from sites you navigate to</source>
-        <translation>Тільки з сайтів, які ви переглядаєте</translation>
+        <translation>Тільки для сайтів, які ви переглядаєте</translation>
     </message>
     <message>
         <source>Exceptions...</source>
@@ -1813,7 +1983,7 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     </message>
     <message>
         <source>Host name:</source>
-        <translation>Назва хоста:</translation>
+        <translation>Назва хосту:</translation>
     </message>
     <message>
         <source>Port:</source>
@@ -1849,7 +2019,7 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     </message>
     <message>
         <source>Opening links</source>
-        <translation>Відкриваються посилання</translation>
+        <translation>Відкриття посилань</translation>
     </message>
     <message>
         <source>Links that want to open in a new window:</source>
@@ -1881,7 +2051,7 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     </message>
     <message>
         <source>Filter Tracking Cookies</source>
-        <translation>Фільтр відстежування куків</translation>
+        <translation>Фільтр відстежування кук</translation>
     </message>
     <message>
         <source>Confirm when closing multiple tabs or windows</source>
@@ -1911,12 +2081,60 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
         <source>Choose Directory...</source>
         <translation>Вибрати теку...</translation>
     </message>
+    <message>
+        <source>A cookie session ends:</source>
+        <translation>Сеанс куки закінчився:</translation>
+    </message>
+    <message>
+        <source>When I exit the application</source>
+        <translation>Коли я виходжу з програми</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 день</translation>
+    </message>
+    <message>
+        <source>2 days</source>
+        <translation>2 дні</translation>
+    </message>
+    <message>
+        <source>3 days</source>
+        <translation>3 дні</translation>
+    </message>
+    <message>
+        <source>7 days</source>
+        <translation>7 днів</translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation>30 днів</translation>
+    </message>
+    <message>
+        <source>AutoFill</source>
+        <translation>Автоматичне заповнення</translation>
+    </message>
+    <message>
+        <source>AutoFill web forms:</source>
+        <translation>Автоматичне заповнення форм у тенетах:</translation>
+    </message>
+    <message>
+        <source>User names and passwords</source>
+        <translation>Псевдоніми і паролі користувача</translation>
+    </message>
+    <message>
+        <source>Edit...</source>
+        <translation>Правка...</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Огляд...</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
     <message>
         <source>Restart required</source>
-        <translation>Необхіно перезапустити</translation>
+        <translation>Потрібно перезапустити</translation>
     </message>
     <message>
         <source>The network cache configuration has changed. So that it can be taken into account, the browser has to be restarted.</source>
@@ -1925,6 +2143,10 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     <message>
         <source>Choose Directory</source>
         <translation>Вибрати теку</translation>
+    </message>
+    <message>
+        <source>Choose CSS File</source>
+        <translation>Вибрати файл CSS</translation>
     </message>
 </context>
 <context>
@@ -1935,7 +2157,7 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>&amp;Редагувати</translation>
+        <translation>&amp;Правка</translation>
     </message>
     <message>
         <source>&amp;Find</source>
@@ -1947,11 +2169,11 @@ Do you want to ignore these errors?&lt;/qt&gt;</source>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Переглянути</translation>
+        <translation type="obsolete">&amp;Переглянути</translation>
     </message>
     <message>
         <source>&amp;Wrap lines</source>
-        <translation>&amp;Перенести рядки</translation>
+        <translation type="obsolete">&amp;Перенести рядки</translation>
     </message>
     <message>
         <source>Source of Page %1</source>
@@ -2061,7 +2283,7 @@ Do you really want to close this page?
     </message>
     <message>
         <source>Bookmark All Tabs</source>
-        <translation>Додати всі вкладки до закладок</translation>
+        <translation>Закласти всі вкладки</translation>
     </message>
 </context>
 <context>
@@ -2088,7 +2310,7 @@ Do you really want to close this page?
     </message>
     <message>
         <source>Configure Search Engines...</source>
-        <translation>Налаштувати рушії пошуку...</translation>
+        <translation type="obsolete">Налаштувати рушії пошуку...</translation>
     </message>
 </context>
 <context>
@@ -2119,7 +2341,7 @@ Do you really want to close this page?
     </message>
     <message>
         <source>In order to display the site, the request along with all the data must be sent once again, which may lead to some unexpected behaviour of the site e.g. the same action might be performed once again. Do you want to continue anyway?</source>
-        <translation>Для того, щоб показати сайт, запит всіх даних потрібно відправити ще раз, що може призвести до несподіваної поведінки сайта, наприклад, ті самі дії виконаються ще раз. Ви все одно бажаєте продовжити?</translation>
+        <translation>Для того, щоб показати сайт, запит всіх даних потрібно відправити ще раз, що може призвести до несподіваної поведінки сайта, наприклад, ті самі дії виконаються ще раз.Бажаєте продовжити попри все?</translation>
     </message>
 </context>
 <context>
@@ -2146,7 +2368,7 @@ Do you really want to close this page?
     </message>
     <message>
         <source>Open Image in New &amp;Window</source>
-        <translation>Відкрити зобаження в новому &amp;вікні</translation>
+        <translation>Відкрити зображення в новому &amp;вікні</translation>
     </message>
     <message>
         <source>Open Image in New &amp;Tab</source>
@@ -2199,6 +2421,10 @@ Do you really want to close this page?
     <message>
         <source>Type in a name for the engine</source>
         <translation>Введіть назву для рушія</translation>
+    </message>
+    <message>
+        <source>Block Image</source>
+        <translation>Заборонити зображення</translation>
     </message>
 </context>
 <context>

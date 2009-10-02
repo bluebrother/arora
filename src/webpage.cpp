@@ -74,7 +74,15 @@ JavaScriptAroraObject::JavaScriptAroraObject(QObject *parent)
 
 QString JavaScriptAroraObject::translate(const QString &string)
 {
-    return trUtf8(string.toUtf8().constData());
+    QString translatedString = trUtf8(string.toUtf8().constData());
+
+    // If the translation is the same as the original string
+    // it could not be translated.  In that case
+    // try to translate using the QApplication domain
+    if (translatedString != string)
+        return translatedString;
+    else
+        return qApp->trUtf8(string.toUtf8().constData());
 }
 
 QObject *JavaScriptAroraObject::currentEngine() const
@@ -88,13 +96,16 @@ QString JavaScriptAroraObject::searchUrl(const QString &string) const
 }
 
 WebPage::WebPage(QObject *parent)
-    : QWebPage(parent)
+    : WebPageProxy(parent)
     , m_openTargetBlankLinksIn(TabWidget::NewWindow)
     , m_javaScriptExternalObject(0)
     , m_javaScriptAroraObject(0)
 {
     setPluginFactory(webPluginFactory());
-    setNetworkAccessManager(BrowserApplication::networkAccessManager());
+    NetworkAccessManagerProxy *networkManagerProxy = new NetworkAccessManagerProxy(this);
+    networkManagerProxy->setWebPage(this);
+    networkManagerProxy->setPrimaryNetworkAccessManager(BrowserApplication::networkAccessManager());
+    setNetworkAccessManager(networkManagerProxy);
     connect(this, SIGNAL(unsupportedContent(QNetworkReply *)),
             this, SLOT(handleUnsupportedContent(QNetworkReply *)));
     connect(this, SIGNAL(frameCreated(QWebFrame *)),
@@ -173,6 +184,14 @@ QList<WebPageLinkedResource> WebPage::linkedResources(const QString &relation)
     return resources;
 }
 
+void WebPage::populateNetworkRequest(QNetworkRequest &request)
+{
+    if (request == lastRequest) {
+        request.setAttribute((QNetworkRequest::Attribute)(pageAttributeId() + 1), lastRequestType);
+    }
+    WebPageProxy::populateNetworkRequest(request);
+}
+
 void WebPage::addExternalBinding(QWebFrame *frame)
 {
     if (!m_javaScriptExternalObject)
@@ -206,6 +225,9 @@ QString WebPage::userAgentForUrl(const QUrl &url) const
 bool WebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &request,
                                       NavigationType type)
 {
+    lastRequest = request;
+    lastRequestType = type;
+
     QString scheme = request.url().scheme();
     if (scheme == QLatin1String("mailto")
         || scheme == QLatin1String("ftp")) {
@@ -223,11 +245,6 @@ bool WebPage::acceptNavigationRequest(QWebFrame *frame, const QNetworkRequest &r
     }
 
     TabWidget::OpenUrlIn openIn = frame ? TabWidget::CurrentTab : TabWidget::NewWindow;
-    // If the user just clicked on the back or forward button on the toolbar
-    if (type == QWebPage::NavigationTypeBackOrForward) {
-        BrowserApplication::instance()->setEventMouseButtons(qApp->mouseButtons());
-        BrowserApplication::instance()->setEventKeyboardModifiers(qApp->keyboardModifiers());
-    }
     openIn = TabWidget::modifyWithUserBehavior(openIn);
 
     // handle the case where we want to do something different then
@@ -303,6 +320,9 @@ void WebPage::handleUnsupportedContent(QNetworkReply *reply)
         return;
 
     QUrl replyUrl = reply->url();
+
+    if (replyUrl.scheme() == QLatin1String("abp"))
+        return;
 
     switch (reply->error()) {
     case QNetworkReply::NoError:

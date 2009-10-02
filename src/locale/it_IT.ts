@@ -61,7 +61,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>WebKit version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versione di WebKit: %1</translation>
     </message>
 </context>
 <context>
@@ -750,15 +750,15 @@ Vuoi ricaricare tutte le pagine?</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezion&amp;a tutto</translation>
     </message>
     <message>
         <source>Alt+Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Ctrl+B</translation>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;When private browsing is turned on, some actions concerning your privacy will be disabled:&lt;ul&gt;&lt;li&gt; Webpages are not added to the history.&lt;/li&gt;&lt;li&gt; Items are automatically removed from the Downloads window.&lt;/li&gt;&lt;li&gt; New cookies are not stored, current cookies can&apos;t be accessed.&lt;/li&gt;&lt;li&gt; Site icons won&apos;t be stored, session won&apos;t be saved.&lt;/li&gt;&lt;li&gt; Searches are not added to the pop-up menu in the search box.&lt;/li&gt;&lt;li&gt; No new network cache is written to disk.&lt;/li&gt;&lt;/ul&gt;Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Quando la navigazione anonima è abilitata, alcune azioni relative alla riservatezza saranno disabilitate:&lt;ul&gt;&lt;li&gt; Le pagine web non sono aggiunte alla cronologia.&lt;/li&gt;&lt;li&gt; Gli elementi sono automaticamente rimossi dalla finestra Scaricamenti.&lt;/li&gt;&lt;li&gt; I nuovi cookie non sono salvati, i cookie attuali non sono accessibili.&lt;/li&gt;&lt;li&gt; Le icone dei siti non saranno salvate, come le sessioni.&lt;/li&gt;&lt;li&gt; Le ricerche non sono aggiunte al menu a comparsa nel riquadro di ricerca.&lt;/li&gt;&lt;li&gt; Nessuna cache di rete sarà scritta su disco.&lt;/li&gt;&lt;/ul&gt;Fino alla chiusura della finestra, sarà possibile fare clic sui pulsanti Indietro e Avanti per tornare alle pagine web aperte.</translation>
     </message>
 </context>
 <context>
@@ -1455,15 +1455,15 @@ Vuoi ignorare questi errori?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>Comma-separated list of keywords that may be entered in the location barfollowed by search terms to search with this engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Elenco di parole chiave, separate da virgole, seguito da termini di ricerca che può essere inserito nella barra degli indirizzi per cercare con questo motore</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation type="unfinished"></translation>
+        <translation>Parole chiave</translation>
     </message>
 </context>
 <context>
@@ -1938,7 +1938,7 @@ Vuoi ignorare questi errori?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>Choose Directory...</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli cartella...</translation>
     </message>
 </context>
 <context>
@@ -1953,7 +1953,7 @@ Vuoi ignorare questi errori?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>Choose Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli cartella</translation>
     </message>
 </context>
 <context>

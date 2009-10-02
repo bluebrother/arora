@@ -63,6 +63,8 @@
 #include "settings.h"
 
 #include "acceptlanguagedialog.h"
+#include "autofilldialog.h"
+#include "autofillmanager.h"
 #include "browserapplication.h"
 #include "browsermainwindow.h"
 #include "cookiedialog.h"
@@ -95,6 +97,9 @@ SettingsDialog::SettingsDialog(QWidget *parent)
     connect(fixedFontButton, SIGNAL(clicked()), this, SLOT(chooseFixedFont()));
     connect(languageButton, SIGNAL(clicked()), this, SLOT(chooseAcceptLanguage()));
     connect(downloadDirectoryButton, SIGNAL(clicked()), this, SLOT(chooseDownloadDirectory()));
+    connect(styleSheetBrowseButton, SIGNAL(clicked()), this, SLOT(chooseStyleSheet()));
+
+    connect(editAutoFillUserButton, SIGNAL(clicked()), this, SLOT(editAutoFillUser()));
 
     // As network cache has too many bugs in 4.5.1, do not allow to enable it.
     if (QLatin1String(qVersion()) == QLatin1String("4.5.1"))
@@ -124,12 +129,19 @@ void SettingsDialog::loadDefaults()
     enablePlugins->setChecked(defaultSettings->testAttribute(QWebSettings::PluginsEnabled));
     enableImages->setChecked(defaultSettings->testAttribute(QWebSettings::AutoLoadImages));
     clickToFlash->setChecked(false);
+    cookieSessionCombo->setCurrentIndex(0);
     filterTrackingCookiesCheckbox->setChecked(false);
+
+    autoFillPasswordFormsCheckBox->setChecked(false);
 }
 
 void SettingsDialog::loadFromSettings()
 {
     QSettings settings;
+    settings.beginGroup(QLatin1String("Settings"));
+    tabWidget->setCurrentIndex(settings.value(QLatin1String("currentTab"), 0).toInt());
+    settings.endGroup();
+
     settings.beginGroup(QLatin1String("MainWindow"));
     QString defaultHome = QLatin1String("about:home");
     homeLineEdit->setText(settings.value(QLatin1String("home"), defaultHome).toString());
@@ -184,9 +196,8 @@ void SettingsDialog::loadFromSettings()
     // Privacy
     settings.beginGroup(QLatin1String("cookies"));
 
-    CookieJar *jar = BrowserApplication::cookieJar();
     QByteArray value = settings.value(QLatin1String("acceptCookies"), QLatin1String("AcceptOnlyFromSitesNavigatedTo")).toByteArray();
-    QMetaEnum acceptPolicyEnum = jar->staticMetaObject.enumerator(jar->staticMetaObject.indexOfEnumerator("AcceptPolicy"));
+    QMetaEnum acceptPolicyEnum = CookieJar::staticMetaObject.enumerator(CookieJar::staticMetaObject.indexOfEnumerator("AcceptPolicy"));
     CookieJar::AcceptPolicy acceptCookies = acceptPolicyEnum.keyToValue(value) == -1 ?
                         CookieJar::AcceptOnlyFromSitesNavigatedTo :
                         static_cast<CookieJar::AcceptPolicy>(acceptPolicyEnum.keyToValue(value));
@@ -203,7 +214,7 @@ void SettingsDialog::loadFromSettings()
     }
 
     value = settings.value(QLatin1String("keepCookiesUntil"), QLatin1String("Expire")).toByteArray();
-    QMetaEnum keepPolicyEnum = jar->staticMetaObject.enumerator(jar->staticMetaObject.indexOfEnumerator("KeepPolicy"));
+    QMetaEnum keepPolicyEnum = CookieJar::staticMetaObject.enumerator(CookieJar::staticMetaObject.indexOfEnumerator("KeepPolicy"));
     CookieJar::KeepPolicy keepCookies = keepPolicyEnum.keyToValue(value) == -1 ?
                         CookieJar::KeepUntilExpire :
                         static_cast<CookieJar::KeepPolicy>(keepPolicyEnum.keyToValue(value));
@@ -217,6 +228,16 @@ void SettingsDialog::loadFromSettings()
     case CookieJar::KeepUntilTimeLimit:
         keepUntilCombo->setCurrentIndex(2);
         break;
+    }
+    int sessionLength = settings.value(QLatin1String("sessionLength"), -1).toInt();
+    switch (sessionLength) {
+    case 1: cookieSessionCombo->setCurrentIndex(1); break;
+    case 2: cookieSessionCombo->setCurrentIndex(2); break;
+    case 3: cookieSessionCombo->setCurrentIndex(3); break;
+    case 7: cookieSessionCombo->setCurrentIndex(4); break;
+    case 30: cookieSessionCombo->setCurrentIndex(5); break;
+    default:
+    case 0: cookieSessionCombo->setCurrentIndex(0); break;
     }
     filterTrackingCookiesCheckbox->setChecked(settings.value(QLatin1String("filterTrackingCookies"), false).toBool());
     settings.endGroup();
@@ -247,11 +268,19 @@ void SettingsDialog::loadFromSettings()
     openTargetBlankLinksIn->setCurrentIndex(settings.value(QLatin1String("openTargetBlankLinksIn"), TabWidget::NewSelectedTab).toInt());
     openLinksFromAppsIn->setCurrentIndex(settings.value(QLatin1String("openLinksFromAppsIn"), TabWidget::NewSelectedTab).toInt());
     settings.endGroup();
+
+    settings.beginGroup(QLatin1String("autofill"));
+    autoFillPasswordFormsCheckBox->setChecked(settings.value(QLatin1String("passwordForms"), false).toBool());
+    settings.endGroup();
 }
 
 void SettingsDialog::saveToSettings()
 {
     QSettings settings;
+    settings.beginGroup(QLatin1String("Settings"));
+    settings.setValue(QLatin1String("currentTab"), tabWidget->currentIndex());
+    settings.endGroup();
+
     settings.beginGroup(QLatin1String("MainWindow"));
     settings.setValue(QLatin1String("home"), homeLineEdit->text());
     settings.setValue(QLatin1String("startupBehavior"), startupBehavior->currentIndex());
@@ -314,8 +343,7 @@ void SettingsDialog::saveToSettings()
         break;
     }
 
-    CookieJar *jar = BrowserApplication::cookieJar();
-    QMetaEnum acceptPolicyEnum = jar->staticMetaObject.enumerator(jar->staticMetaObject.indexOfEnumerator("AcceptPolicy"));
+    QMetaEnum acceptPolicyEnum = CookieJar::staticMetaObject.enumerator(CookieJar::staticMetaObject.indexOfEnumerator("AcceptPolicy"));
     settings.setValue(QLatin1String("acceptCookies"), QLatin1String(acceptPolicyEnum.valueToKey(acceptCookies)));
 
     CookieJar::KeepPolicy keepPolicy;
@@ -332,8 +360,19 @@ void SettingsDialog::saveToSettings()
         break;
     }
 
-    QMetaEnum keepPolicyEnum = jar->staticMetaObject.enumerator(jar->staticMetaObject.indexOfEnumerator("KeepPolicy"));
+    QMetaEnum keepPolicyEnum = CookieJar::staticMetaObject.enumerator(CookieJar::staticMetaObject.indexOfEnumerator("KeepPolicy"));
     settings.setValue(QLatin1String("keepCookiesUntil"), QLatin1String(keepPolicyEnum.valueToKey(keepPolicy)));
+    int sessionLength = cookieSessionCombo->currentIndex();
+    switch (sessionLength) {
+    case 1: sessionLength = 1; break;
+    case 2: sessionLength = 2; break;
+    case 3: sessionLength = 3; break;
+    case 4: sessionLength = 7; break;
+    case 5: sessionLength = 30; break;
+    default:
+    case 0: sessionLength = -1; break;
+    }
+    settings.setValue(QLatin1String("sessionLength"), sessionLength);
     settings.setValue(QLatin1String("filterTrackingCookies"), filterTrackingCookiesCheckbox->isChecked());
     settings.endGroup();
 
@@ -363,10 +402,15 @@ void SettingsDialog::saveToSettings()
     settings.setValue(QLatin1String("openLinksFromAppsIn"), openLinksFromAppsIn->currentIndex());
     settings.endGroup();
 
+    settings.beginGroup(QLatin1String("autofill"));
+    settings.setValue(QLatin1String("passwordForms"), autoFillPasswordFormsCheckBox->isChecked());
+    settings.endGroup();
+
     BrowserApplication::instance()->loadSettings();
     BrowserApplication::networkAccessManager()->loadSettings();
     BrowserApplication::cookieJar()->loadSettings();
     BrowserApplication::historyManager()->loadSettings();
+    BrowserApplication::autoFillManager()->loadSettings();
 
     WebPage::webPluginFactory()->refreshPlugins();
 
@@ -437,6 +481,19 @@ void SettingsDialog::setHomeToCurrentPage()
 void SettingsDialog::chooseAcceptLanguage()
 {
     AcceptLanguageDialog dialog;
+    dialog.exec();
+}
+
+void SettingsDialog::chooseStyleSheet()
+{
+    QUrl url = QUrl::fromEncoded(userStyleSheet->text().toUtf8());
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Choose CSS File"), url.toLocalFile());
+    userStyleSheet->setText(QString::fromUtf8(QUrl::fromLocalFile(fileName).toEncoded()));
+}
+
+void SettingsDialog::editAutoFillUser()
+{
+    AutoFillDialog dialog;
     dialog.exec();
 }
 

@@ -41,7 +41,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>WebKit version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Verze WebKitu: %1</translation>
     </message>
 </context>
 <context>
@@ -72,6 +72,75 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>AdBlockBlockedNetworkReply</name>
+    <message>
+        <source>Blocked by AdBlockRule: %1</source>
+        <translation>Blokováno AdBlock pravidlem: %1</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockDialog</name>
+    <message>
+        <source>Add Custom Rule</source>
+        <translation>Přidat vlastní pravidlo</translation>
+    </message>
+    <message>
+        <source>Learn more about writing rules...</source>
+        <translation>Více informací o psaní pravidel...</translation>
+    </message>
+    <message>
+        <source>Update Subscription</source>
+        <translation>Aktualizovat cizí filtry</translation>
+    </message>
+    <message>
+        <source>Browse Subscriptions...</source>
+        <translation>Prohlížet cizí filtry...</translation>
+    </message>
+    <message>
+        <source>Remove Subscription</source>
+        <translation>Odstranilt cizí filtry</translation>
+    </message>
+    <message>
+        <source>AdBlock Configuration</source>
+        <translation>Konfigurace AdBlock</translation>
+    </message>
+    <message>
+        <source>Enable AdBlock</source>
+        <translation>Povolit AdBlock</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Akce</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockManager</name>
+    <message>
+        <source>Custom Rules</source>
+        <translation>Vlastní pravidla</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockModel</name>
+    <message>
+        <source>Rule</source>
+        <translation>Pravidlo</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockSchemeAccessHandler</name>
+    <message>
+        <source>Subscribe?</source>
+        <translation>Přidat cizí filtry?</translation>
+    </message>
+    <message>
+        <source>Subscribe to this AdBlock subscription?
+%1</source>
+        <translation>Přidat tyto AdBlock cizí filtry?
+%1</translation>
+    </message>
+</context>
+<context>
     <name>AddBookmarkDialog</name>
     <message>
         <source>Add Bookmark</source>
@@ -92,6 +161,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Add Folder</source>
         <translation>Přidat složku</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillDialog</name>
+    <message>
+        <source>Form Passwords</source>
+        <translation>Formulář hesel</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Smazat</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>Smazat vše</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillManager</name>
+    <message>
+        <source>&lt;b&gt;Would you like to save this password?&lt;/b&gt;&lt;br&gt;         To review passwords you have saved and remove them, open the AutoFill pane of preferences.</source>
+        <translation>&lt;b&gt;Chceš uložit toto heslo?&lt;/b&gt;&lt;br&gt;         Pro prohlížení uložených hesel a jejich odstranění otevřete kartu AutoFill v dialogu nastavení.</translation>
+    </message>
+    <message>
+        <source>Never for this site</source>
+        <translation>Nikdy na této stránce</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>Nyní ne</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillModel</name>
+    <message>
+        <source>WebSite</source>
+        <translation>Webová stránka</translation>
+    </message>
+    <message>
+        <source>User Name</source>
+        <translation>Uživatelské jméno</translation>
     </message>
 </context>
 <context>
@@ -222,28 +332,29 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>XBEL bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>XBEL záložky</translation>
     </message>
     <message>
         <source>HTML Netscape bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Netscape HTML záložky</translation>
     </message>
     <message>
         <source>htmlToXBel tool required</source>
-        <translation type="unfinished"></translation>
+        <translation>je vyžadován nástroj htmlToXBel</translation>
     </message>
     <message>
         <source>htmlToXBel tool, which is shipped with Arora and is needed to import HTML bookmarks, is not installed or not available in the search paths.</source>
-        <translation type="unfinished"></translation>
+        <translation>nástroj htmlToXBel, který je dodáván s Arorou a je nutný k importu HTMl záložek, není nainstalován nebo není dostupný v hledaných cestách.</translation>
     </message>
     <message>
         <source>Loading Bookmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Načítám záložku</translation>
     </message>
     <message>
         <source>Error when loading HTML bookmarks: %1
 </source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při načítání HTML záložek: %1
+</translation>
     </message>
 </context>
 <context>
@@ -292,7 +403,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bookmarks</source>
-        <translation type="unfinished">Záložky</translation>
+        <translation type="obsolete">Záložky</translation>
     </message>
 </context>
 <context>
@@ -309,11 +420,15 @@ Přesto ukončit?</translation>
     </message>
     <message>
         <source>The saved session will not be restored because Arora crashed while trying to restore this session.</source>
-        <translation>Uložená relace nebude obnovena, protože Arora spadla při pokusu o její obnovení.</translation>
+        <translation type="obsolete">Uložená relace nebude obnovena, protože Arora spadla při pokusu o její obnovení.</translation>
     </message>
     <message>
         <source> (Change: %1 %2)</source>
         <translation type="obsolete">(Revize: %1 %2)</translation>
+    </message>
+    <message>
+        <source>Arora crashed while trying to restore this session.  Should I try again?</source>
+        <translation>Arora spadla při pokusu o obnovu této relace. Zkusit znovu?</translation>
     </message>
 </context>
 <context>
@@ -703,7 +818,7 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>Prefere&amp;nces...</source>
-        <translation>Před&amp;volby...</translation>
+        <translation type="obsolete">Před&amp;volby...</translation>
     </message>
     <message>
         <source>Show Menu Bar</source>
@@ -735,23 +850,71 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished">Výchozí</translation>
+        <translation>Výchozí</translation>
     </message>
     <message>
         <source>Text Encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>Kódování textu</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybr&amp;at vše</translation>
     </message>
     <message>
         <source>Alt+Ctrl+B</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <source>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;When private browsing is turned on, some actions concerning your privacy will be disabled:&lt;ul&gt;&lt;li&gt; Webpages are not added to the history.&lt;/li&gt;&lt;li&gt; Items are automatically removed from the Downloads window.&lt;/li&gt;&lt;li&gt; New cookies are not stored, current cookies can&apos;t be accessed.&lt;/li&gt;&lt;li&gt; Site icons won&apos;t be stored, session won&apos;t be saved.&lt;/li&gt;&lt;li&gt; Searches are not added to the pop-up menu in the search box.&lt;/li&gt;&lt;li&gt; No new network cache is written to disk.&lt;/li&gt;&lt;/ul&gt;Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
-        <translation type="unfinished"></translation>
+        <source>Options...</source>
+        <translation>Nastavení...</translation>
+    </message>
+    <message>
+        <source>Configure Search Engines...</source>
+        <translation>Nastavit vyhledávací enginy...</translation>
+    </message>
+    <message>
+        <source>&amp;Ad Block...</source>
+        <translation>&amp;AdBlock...</translation>
+    </message>
+    <message>
+        <source>When private browsing is turned on, some actions concerning your privacy will be disabled:</source>
+        <translation>Při zapnutém soukromém prolížení budou některé akce týkající se tvého soukromí zakázány:</translation>
+    </message>
+    <message>
+        <source>Webpages are not added to the history.</source>
+        <translation>Stránky nejsou přidávány do historie.</translation>
+    </message>
+    <message>
+        <source>Items are automatically removed from the Downloads window.</source>
+        <translation>Soubory jsou automaticky smazávány z okna stahování.</translation>
+    </message>
+    <message>
+        <source>New cookies are not stored, current cookies can&apos;t be accessed.</source>
+        <translation>Nové cookies nejsou uloženy, ke stávajícím cookies nemůže být přistupováno.</translation>
+    </message>
+    <message>
+        <source>Site icons won&apos;t be stored.</source>
+        <translation>Ikony stránek nebudou ukládány.</translation>
+    </message>
+    <message>
+        <source>Session won&apos;t be saved.</source>
+        <translation>Relace nebude uložena.</translation>
+    </message>
+    <message>
+        <source>Searches are not added to the pop-up menu in the search box.</source>
+        <translation>Vyhledávání nejsou přidávány do pop-up menu vyhledávacího políčka.</translation>
+    </message>
+    <message>
+        <source>No new network cache is written to disk.</source>
+        <translation>Síťová cache není ukládána na disk.</translation>
+    </message>
+    <message>
+        <source>Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
+        <translation>Dokud nezavřeš okno, pořád se můžeš pomocí tlačítek Zpět a Vpřed vrátit na stránky, které jsi otevřel.</translation>
+    </message>
+    <message>
+        <source>Private Browsing</source>
+        <translation>Soukromé prohlížení</translation>
     </message>
 </context>
 <context>
@@ -1077,7 +1240,7 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>Download directory (%1) couldn&apos;t be created.</source>
-        <translation type="unfinished"></translation>
+        <translation>Složka pro stahování (%1) nemůže být vytvořena.</translation>
     </message>
 </context>
 <context>
@@ -1134,30 +1297,30 @@ Přesto ukončit?</translation>
     </message>
     <message>
         <source>GB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>FileAccessReply</name>
     <message>
         <source>No Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Žádná chyba</translation>
     </message>
     <message>
         <source>Error opening: %1: No such file or directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při otevírání %1: Soubor nebo složka neexistuje</translation>
     </message>
     <message>
         <source>Unable to read %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Chyba při čtení %1</translation>
     </message>
     <message>
         <source>Contents of %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Obsah %1</translation>
     </message>
     <message>
         <source>%1 KB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1240,23 +1403,23 @@ Přesto ukončit?</translation>
     <name>JavaScriptAroraObject</name>
     <message>
         <source>Welcome to Arora!</source>
-        <translation type="unfinished"></translation>
+        <translation>Vítej v Aroře!</translation>
     </message>
     <message>
         <source>Arora Start</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Search!</source>
-        <translation type="unfinished"></translation>
+        <translation>Hledej!</translation>
     </message>
     <message>
         <source>Search results provided by</source>
-        <translation type="unfinished"></translation>
+        <translation>Výsledky vyhledávání poskytuje</translation>
     </message>
     <message>
         <source>About Arora</source>
-        <translation type="unfinished"></translation>
+        <translation>O Aroře</translation>
     </message>
 </context>
 <context>
@@ -1267,7 +1430,7 @@ Přesto ukončit?</translation>
     </message>
     <message>
         <source>No translation files are installed.</source>
-        <translation>Žádné překlady nejsou nainstalovány</translation>
+        <translation type="obsolete">Žádné překlady nejsou nainstalovány</translation>
     </message>
     <message>
         <source>Choose language</source>
@@ -1276,6 +1439,10 @@ Přesto ukončit?</translation>
     <message>
         <source>&lt;p&gt;You can run with a different language than&lt;br&gt;the operating system default.&lt;/p&gt;&lt;p&gt;Please choose the language which should be used&lt;/p&gt;</source>
         <translation>&lt;p&gt;Arora může používat jiný jazyk, než&lt;br&gt;je výchozí operačního systému.&lt;/p&gt;&lt;p&gt;Prosím vyber, který jazyk má být použit&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>No translation files are installed at %1.</source>
+        <translation>Žádné překladové soubory nejsou instalovány v %1.</translation>
     </message>
 </context>
 <context>
@@ -1330,19 +1497,19 @@ Chceš ignorovat tyto chyby?</translation>
     </message>
     <message>
         <source>Issuer: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Vydal: %1</translation>
     </message>
     <message>
         <source>Not valid before: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatný před: %1</translation>
     </message>
     <message>
         <source>Valid until: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Platný od: %1</translation>
     </message>
     <message>
         <source>Alternate Names:</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternativní jména:</translation>
     </message>
 </context>
 <context>
@@ -1438,15 +1605,15 @@ Chceš ignorovat tyto chyby?</translation>
     </message>
     <message>
         <source>Comma-separated list of keywords that may be entered in the location barfollowed by search terms to search with this engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Čárkou oddělený seznam klíčkových slov, které mají být vloženy do vyhledávacího políčka následovány vyhledávanými slovy s tímto enginem</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation type="unfinished"></translation>
+        <translation>Klíčová slova</translation>
     </message>
 </context>
 <context>
@@ -1559,7 +1726,7 @@ Chceš ignorovat tyto chyby?</translation>
     </message>
     <message>
         <source>Highlight All</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyznačit vše</translation>
     </message>
 </context>
 <context>
@@ -1901,11 +2068,59 @@ Chceš ignorovat tyto chyby?</translation>
     </message>
     <message>
         <source>Use the default search engine as fallback when the URL given by the user is invalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Použít výchozí vyhledávácí engine jako nouzový, když URL zadaná uživatelem je neplatná</translation>
     </message>
     <message>
         <source>Choose Directory...</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat složku...</translation>
+    </message>
+    <message>
+        <source>A cookie session ends:</source>
+        <translation>Relace session končí:</translation>
+    </message>
+    <message>
+        <source>When I exit the application</source>
+        <translation>Když ukončím aplikaci</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>1 den</translation>
+    </message>
+    <message>
+        <source>2 days</source>
+        <translation>2 dny</translation>
+    </message>
+    <message>
+        <source>3 days</source>
+        <translation>3 dny</translation>
+    </message>
+    <message>
+        <source>7 days</source>
+        <translation>7 dní</translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation>30 dní</translation>
+    </message>
+    <message>
+        <source>AutoFill</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>AutoFill web forms:</source>
+        <translation>Automaticky doplňovat webové formuláře:</translation>
+    </message>
+    <message>
+        <source>User names and passwords</source>
+        <translation>Uživatelská jména a hesla</translation>
+    </message>
+    <message>
+        <source>Edit...</source>
+        <translation>Upravit...</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Prohlížet...</translation>
     </message>
 </context>
 <context>
@@ -1920,7 +2135,11 @@ Chceš ignorovat tyto chyby?</translation>
     </message>
     <message>
         <source>Choose Directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat složku</translation>
+    </message>
+    <message>
+        <source>Choose CSS File</source>
+        <translation>Vybrat CSS soubor</translation>
     </message>
 </context>
 <context>
@@ -1939,11 +2158,11 @@ Chceš ignorovat tyto chyby?</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Zobrazit</translation>
+        <translation type="obsolete">&amp;Zobrazit</translation>
     </message>
     <message>
         <source>&amp;Wrap lines</source>
-        <translation>Za&amp;lamovat řádky</translation>
+        <translation type="obsolete">Za&amp;lamovat řádky</translation>
     </message>
     <message>
         <source>Source of Page </source>
@@ -1951,7 +2170,7 @@ Chceš ignorovat tyto chyby?</translation>
     </message>
     <message>
         <source>Source of Page %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zdrojový kód stránky %1</translation>
     </message>
 </context>
 <context>
@@ -2076,7 +2295,7 @@ Opravdu chceš zavřít tuto stránku?
     </message>
     <message>
         <source>Configure Search Engines...</source>
-        <translation>Nastavit vyhledávací enginy...</translation>
+        <translation type="obsolete">Nastavit vyhledávací enginy...</translation>
     </message>
     <message>
         <source>No Recent Searches</source>
@@ -2123,11 +2342,11 @@ Opravdu chceš zavřít tuto stránku?
     </message>
     <message>
         <source>Resending POST request</source>
-        <translation type="unfinished"></translation>
+        <translation>Znovuposílám POST požadavek</translation>
     </message>
     <message>
         <source>In order to display the site, the request along with all the data must be sent once again, which may lead to some unexpected behaviour of the site e.g. the same action might be performed once again. Do you want to continue anyway?</source>
-        <translation type="unfinished"></translation>
+        <translation>Pro zobrazení stránky musí být požadavek spolu se všemi daty poslán znovu, což může způsobit neočekáváné chování stránky, například ta samá akce může být vykonána znovu. Přesto pokračovat?</translation>
     </message>
 </context>
 <context>
@@ -2166,7 +2385,7 @@ Opravdu chceš zavřít tuto stránku?
     </message>
     <message>
         <source>&amp;Save Image</source>
-        <translation>Uložit obrázek</translation>
+        <translation>&amp;Uložit obrázek</translation>
     </message>
     <message>
         <source>&amp;Copy Image</source>
@@ -2186,31 +2405,35 @@ Opravdu chceš zavřít tuto stránku?
     </message>
     <message>
         <source>Add to the toolbar search</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat do políčka vyhledávání</translation>
     </message>
     <message>
         <source>Method not supported</source>
-        <translation type="unfinished"></translation>
+        <translation>Metoda není podporována</translation>
     </message>
     <message>
         <source>%1 method is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Metoda %1 není podporována.</translation>
     </message>
     <message>
         <source>Search engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyhledávací engine</translation>
     </message>
     <message>
         <source>Choose the desired search engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber požadovaný vyhledávací engine</translation>
     </message>
     <message>
         <source>Engine name</source>
-        <translation type="unfinished"></translation>
+        <translation>Název enginu</translation>
     </message>
     <message>
         <source>Type in a name for the engine</source>
-        <translation type="unfinished"></translation>
+        <translation>Napiš jméno pro engine</translation>
+    </message>
+    <message>
+        <source>Block Image</source>
+        <translation>Blokovat obrázek</translation>
     </message>
 </context>
 <context>

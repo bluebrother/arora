@@ -64,12 +64,13 @@
 #define NETWORKACCESSMANAGER_H
 
 #include <qnetworkaccessmanager.h>
-#include <qnetworkproxy.h>
 #include <qsslconfiguration.h>
+#include "networkaccessmanagerproxy.h"
 
 class SchemeAccessHandler;
 
-class NetworkAccessManager : public QNetworkAccessManager
+class AdBlockNetwork;
+class NetworkAccessManager : public NetworkAccessManagerProxy
 {
     Q_OBJECT
 
@@ -79,6 +80,11 @@ signals:
 public:
     NetworkAccessManager(QObject *parent = 0);
     void setSchemeHandler(const QString &scheme, SchemeAccessHandler *handler);
+
+    inline QNetworkReply *createRequestProxy(QNetworkAccessManager::Operation op, const QNetworkRequest &request, QIODevice *outgoingData)
+    {
+        return createRequest(op, request, outgoingData);
+    }
 
 protected:
     QNetworkReply *createRequest(QNetworkAccessManager::Operation op, const QNetworkRequest &request, QIODevice *outgoingData = 0);
@@ -103,6 +109,7 @@ private:
     QHash<QString, SchemeAccessHandler*> m_schemeHandlers;
 
     QNetworkCookieJar *m_privateCookieJar;
+    AdBlockNetwork *m_adblockNetwork;
 };
 
 #endif // NETWORKACCESSMANAGER_H

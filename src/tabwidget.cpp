@@ -7,7 +7,7 @@
  * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * but WITHOUT ANY WARRANTY; without even the iQ_WS_X11mplied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
@@ -92,6 +92,7 @@
 #include <qstackedwidget.h>
 #include <qstyle.h>
 #include <qtoolbutton.h>
+#include <qwebhistory.h>
 
 #include <qdebug.h>
 
@@ -108,12 +109,13 @@ TabWidget::TabWidget(QWidget *parent)
     , m_recentlyClosedTabsMenu(0)
     , m_swappedDelayedWidget(false)
     , m_lineEditCompleter(0)
-    , m_lineEdits(0)
+    , m_locationBars(0)
     , m_tabBar(new TabBar(this))
 {
     setElideMode(Qt::ElideRight);
 
     new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_T), this, SLOT(openLastTab()));
+    new QShortcut(QKeySequence::Undo, this, SLOT(openLastTab()));
 
     connect(m_tabBar, SIGNAL(loadUrl(const QUrl&, TabWidget::OpenUrlIn)),
             this, SLOT(loadUrl(const QUrl&, TabWidget::OpenUrlIn)));
@@ -141,7 +143,9 @@ TabWidget::TabWidget(QWidget *parent)
     connect(m_bookmarkTabsAction, SIGNAL(triggered()), this, SLOT(bookmarkTabs()));
 
     m_newTabAction->setIcon(QIcon(QLatin1String(":graphics/addtab.png")));
+#if QT_VERSION < 0x040600 || (QT_VERSION >= 0x040600 && !defined(Q_WS_X11))
     m_newTabAction->setIconVisibleInMenu(false);
+#endif
 
     QSettings settings;
     settings.beginGroup(QLatin1String("tabs"));
@@ -151,6 +155,10 @@ TabWidget::TabWidget(QWidget *parent)
 
     m_previousTabAction = new QAction(this);
     connect(m_previousTabAction, SIGNAL(triggered()), this, SLOT(previousTab()));
+#if QT_VERSION >= 0x040600 && defined(Q_WS_X11)
+    m_previousTabAction->setIcon(QIcon::fromTheme(QLatin1String("go-previous")));
+    m_nextTabAction->setIcon(QIcon::fromTheme(QLatin1String("go-next")));
+#endif
 
     m_recentlyClosedTabsMenu = new QMenu(this);
     connect(m_recentlyClosedTabsMenu, SIGNAL(aboutToShow()),
@@ -171,9 +179,14 @@ TabWidget::TabWidget(QWidget *parent)
 #endif
 
     bool oneCloseButton = settings.value(QLatin1String("oneCloseButton"), false).toBool();
+    m_closeTabAction->setIcon(QIcon(QLatin1String(":graphics/closetab.png")));
+#if QT_VERSION < 0x040600 || (QT_VERSION >= 0x040600 && !defined(Q_WS_X11))
+    m_closeTabAction->setIconVisibleInMenu(false);
+#endif
     if (oneCloseButton) {
-        m_closeTabAction->setIcon(QIcon(QLatin1String(":graphics/closetab.png")));
+#if QT_VERSION < 0x040600 || (QT_VERSION >= 0x040600 && !defined(Q_WS_X11))
         m_closeTabAction->setIconVisibleInMenu(false);
+#endif
         // corner buttons
         QToolButton *closeTabButton = new QToolButton(this);
         closeTabButton->setDefaultAction(m_closeTabAction);
@@ -190,7 +203,7 @@ TabWidget::TabWidget(QWidget *parent)
     connect(this, SIGNAL(currentChanged(int)),
             this, SLOT(currentChanged(int)));
 
-    m_lineEdits = new QStackedWidget(this);
+    m_locationBars = new QStackedWidget(this);
 
     connect(BrowserApplication::historyManager(), SIGNAL(historyCleared()),
         this, SLOT(historyCleared()));
@@ -211,8 +224,8 @@ void TabWidget::clear()
     m_recentlyClosedTabs.clear();
     m_recentlyClosedTabsAction->setEnabled(false);
     // clear the line edit history
-    for (int i = 0; i < m_lineEdits->count(); ++i) {
-        QLineEdit *qLineEdit = lineEdit(i);
+    for (int i = 0; i < m_locationBars->count(); ++i) {
+        QLineEdit *qLineEdit = locationBar(i);
         qLineEdit->setText(qLineEdit->text());
         webViewSearch(i)->clear();
     }
@@ -233,9 +246,9 @@ void TabWidget::reloadTab(int index)
 
 void TabWidget::moveTab(int fromIndex, int toIndex)
 {
-    QWidget *lineEdit = m_lineEdits->widget(fromIndex);
-    m_lineEdits->removeWidget(lineEdit);
-    m_lineEdits->insertWidget(toIndex, lineEdit);
+    QWidget *lineEdit = m_locationBars->widget(fromIndex);
+    m_locationBars->removeWidget(lineEdit);
+    m_locationBars->insertWidget(toIndex, lineEdit);
 }
 
 void TabWidget::addWebAction(QAction *action, QWebPage::WebAction webAction)
@@ -251,9 +264,9 @@ void TabWidget::currentChanged(int index)
     if (!webView)
         return;
 
-    Q_ASSERT(m_lineEdits->count() == count());
+    Q_ASSERT(m_locationBars->count() == count());
 
-    WebView *oldWebView = this->webView(m_lineEdits->currentIndex());
+    WebView *oldWebView = this->webView(m_locationBars->currentIndex());
     if (oldWebView) {
         disconnect(oldWebView, SIGNAL(statusBarMessage(const QString&)),
                    this, SIGNAL(showStatusBarMessage(const QString&)));
@@ -275,11 +288,11 @@ void TabWidget::currentChanged(int index)
         mapper->updateCurrent(webView->page());
     }
     emit setCurrentTitle(webView->title());
-    m_lineEdits->setCurrentIndex(index);
+    m_locationBars->setCurrentIndex(index);
     emit loadProgress(webView->progress());
     emit showStatusBarMessage(webView->lastStatusBarText());
     if (webView->url().isEmpty() && webView->hasFocus()) {
-        m_lineEdits->currentWidget()->setFocus();
+        m_locationBars->currentWidget()->setFocus();
     } else if (!webView->url().isEmpty()) {
         webView->setFocus();
     }
@@ -315,14 +328,14 @@ QAction *TabWidget::previousTabAction() const
     return m_previousTabAction;
 }
 
-QWidget *TabWidget::lineEditStack() const
+QWidget *TabWidget::locationBarStack() const
 {
-    return m_lineEdits;
+    return m_locationBars;
 }
 
-QLineEdit *TabWidget::currentLineEdit() const
+QLineEdit *TabWidget::currentLocationBar() const
 {
-    return lineEdit(m_lineEdits->currentIndex());
+    return locationBar(m_locationBars->currentIndex());
 }
 
 WebView *TabWidget::currentWebView() const
@@ -330,9 +343,9 @@ WebView *TabWidget::currentWebView() const
     return webView(currentIndex());
 }
 
-QLineEdit *TabWidget::lineEdit(int index) const
+QLineEdit *TabWidget::locationBar(int index) const
 {
-    return qobject_cast<LocationBar*>(m_lineEdits->widget(index));
+    return qobject_cast<LocationBar*>(m_locationBars->widget(index));
 }
 
 WebView *TabWidget::webView(int index) const
@@ -345,16 +358,16 @@ WebView *TabWidget::webView(int index) const
         if (count() == 1) {
             TabWidget *that = const_cast<TabWidget*>(this);
             that->setUpdatesEnabled(false);
-            LocationBar *currentLocationBar = qobject_cast<LocationBar*>(m_lineEdits->widget(0));
+            LocationBar *currentLocationBar = qobject_cast<LocationBar*>(m_locationBars->widget(0));
             bool giveBackFocus = currentLocationBar->hasFocus();
-            m_lineEdits->removeWidget(currentLocationBar);
-            m_lineEdits->addWidget(new QWidget());
+            m_locationBars->removeWidget(currentLocationBar);
+            m_locationBars->addWidget(new QWidget());
             that->newTab();
             that->closeTab(0);
-            QWidget *newEmptyLineEdit = m_lineEdits->widget(0);
-            m_lineEdits->removeWidget(newEmptyLineEdit);
+            QWidget *newEmptyLineEdit = m_locationBars->widget(0);
+            m_locationBars->removeWidget(newEmptyLineEdit);
             newEmptyLineEdit->deleteLater();
-            m_lineEdits->addWidget(currentLocationBar);
+            m_locationBars->addWidget(currentLocationBar);
             currentLocationBar->setWebView(currentWebView());
             if (giveBackFocus)
                 currentLocationBar->setFocus();
@@ -416,8 +429,8 @@ WebView *TabWidget::makeNewTab(bool makeCurrent)
     }
     locationBar->setCompleter(m_lineEditCompleter);
     connect(locationBar, SIGNAL(returnPressed()), this, SLOT(lineEditReturnPressed()));
-    m_lineEdits->addWidget(locationBar);
-    m_lineEdits->setSizePolicy(locationBar->sizePolicy());
+    m_locationBars->addWidget(locationBar);
+    m_locationBars->setSizePolicy(locationBar->sizePolicy());
 
 #ifndef AUTOTESTS
     QWidget::setTabOrder(locationBar, qFindChild<ToolbarSearch*>(BrowserMainWindow::parentWindow(this)));
@@ -546,8 +559,12 @@ void TabWidget::bookmarkTabs()
 void TabWidget::lineEditReturnPressed()
 {
     if (QLineEdit *lineEdit = qobject_cast<QLineEdit*>(sender())) {
-        loadString(lineEdit->text());
-        if (m_lineEdits->currentWidget() == lineEdit)
+        OpenUrlIn tab = CurrentTab;
+        if (qApp->keyboardModifiers() == Qt::AltModifier)
+            tab = NewSelectedTab;
+
+        loadString(lineEdit->text(), tab);
+        if (m_locationBars->currentWidget() == lineEdit)
             currentWebView()->setFocus();
     }
 }
@@ -618,11 +635,16 @@ void TabWidget::closeTab(int index)
 
         m_recentlyClosedTabsAction->setEnabled(true);
         m_recentlyClosedTabs.prepend(tab->url());
+#if QT_VERSION >= 0x040600
+        m_recentlyClosedTabsHistory.prepend(tab->history()->saveState());
+#else
+        m_recentlyClosedTabsHistory.prepend(QByteArray());
+#endif
         if (m_recentlyClosedTabs.size() >= TabWidget::m_recentlyClosedTabsSize)
             m_recentlyClosedTabs.removeLast();
     }
-    QWidget *lineEdit = m_lineEdits->widget(index);
-    m_lineEdits->removeWidget(lineEdit);
+    QWidget *lineEdit = m_locationBars->widget(index);
+    m_locationBars->removeWidget(lineEdit);
     lineEdit->deleteLater();
 
     QWidget *webViewWithSearch = widget(index);
@@ -762,7 +784,12 @@ void TabWidget::openLastTab()
     if (m_recentlyClosedTabs.isEmpty())
         return;
     QUrl url = m_recentlyClosedTabs.takeFirst();
+    QByteArray historyState = m_recentlyClosedTabsHistory.takeFirst();
+#if QT_VERSION >= 0x040600
+    createTab(historyState, NewTab);
+#else
     loadUrl(url, NewTab);
+#endif
     m_recentlyClosedTabsAction->setEnabled(!m_recentlyClosedTabs.isEmpty());
 }
 
@@ -771,7 +798,11 @@ void TabWidget::aboutToShowRecentTabsMenu()
     m_recentlyClosedTabsMenu->clear();
     for (int i = 0; i < m_recentlyClosedTabs.count(); ++i) {
         QAction *action = new QAction(m_recentlyClosedTabsMenu);
+#if QT_VERSION >= 0x040600
+        action->setData(m_recentlyClosedTabsHistory.at(i));
+#else
         action->setData(m_recentlyClosedTabs.at(i));
+#endif
         QIcon icon = BrowserApplication::instance()->icon(m_recentlyClosedTabs.at(i));
         action->setIcon(icon);
         action->setText(m_recentlyClosedTabs.at(i).toString());
@@ -781,8 +812,16 @@ void TabWidget::aboutToShowRecentTabsMenu()
 
 void TabWidget::aboutToShowRecentTriggeredAction(QAction *action)
 {
+    if (!action)
+        return;
+
+#if QT_VERSION >= 0x040600
+    QByteArray historyState = action->data().toByteArray();
+    createTab(historyState, NewTab);
+#else
     QUrl url = action->data().toUrl();
     loadUrl(url, NewTab);
+#endif
 }
 
 void TabWidget::retranslate()
@@ -828,7 +867,7 @@ void TabWidget::loadString(const QString &string, OpenUrlIn tab)
         return;
 
     QUrl url = guessUrlFromString(string);
-    currentLineEdit()->setText(QString::fromUtf8(url.toEncoded()));
+    currentLocationBar()->setText(QString::fromUtf8(url.toEncoded()));
     loadUrl(url, tab);
 }
 
@@ -1011,19 +1050,32 @@ QByteArray TabWidget::saveState() const
     stream << qint32(version);
 
     QStringList tabs;
+    QList<QByteArray> tabsHistory;
     for (int i = 0; i < count(); ++i) {
         if (!m_swappedDelayedWidget) {
             tabs.append(QString::null);
+            tabsHistory.append(QByteArray());
             continue;
         }
         if (WebView *tab = webView(i)) {
             tabs.append(QString::fromUtf8(tab->url().toEncoded()));
+#if QT_VERSION >= 0x040600
+            if (tab->history()->count() != 0)
+                tabsHistory.append(tab->history()->saveState());
+            else
+                tabsHistory.append(QByteArray());
+#else
+            tabsHistory.append(QByteArray());
+#endif
         } else {
             tabs.append(QString::null);
+            tabsHistory.append(QByteArray());
         }
     }
     stream << tabs;
     stream << currentIndex();
+    stream << tabsHistory;
+
     return data;
 }
 
@@ -1044,15 +1096,41 @@ bool TabWidget::restoreState(const QByteArray &state)
 
     QStringList openTabs;
     stream >> openTabs;
-    for (int i = 0; i < openTabs.count(); ++i) {
-        QUrl url = QUrl::fromEncoded(openTabs.at(i).toUtf8());
-        loadUrl(url, i == 0 && currentWebView()->url() == QUrl() ? CurrentTab : NewTab);
-    }
 
     int currentTab;
     stream >> currentTab;
     setCurrentIndex(currentTab);
+    QList<QByteArray> tabHistory;
+    stream >> tabHistory;
 
+    for (int i = 0; i < openTabs.count(); ++i) {
+        QUrl url = QUrl::fromEncoded(openTabs.at(i).toUtf8());
+        TabWidget::OpenUrlIn tab = i == 0 && currentWebView()->url() == QUrl() ? CurrentTab : NewTab;
+#if QT_VERSION >= 0x040600
+        QByteArray historyState = tabHistory.value(i);
+        if (!historyState.isEmpty()) {
+            createTab(historyState, tab);
+        } else {
+#endif
+            if (WebView *webView = getView(tab, currentWebView()))
+                webView->loadUrl(url);
+#if QT_VERSION >= 0x040600
+        }
+#endif
+
+    }
     return true;
+}
+
+void TabWidget::createTab(const QByteArray &historyState, TabWidget::OpenUrlIn tab)
+{
+#if QT_VERSION >= 0x040600
+    if (WebView *webView = getView(tab, currentWebView()))
+        webView->history()->restoreState(historyState);
+#else
+    qWarning() << "Warning: TabWidget::createTab should not be called, but it is...";
+    Q_UNUSED(historyState);
+    Q_UNUSED(tab);
+#endif
 }
 

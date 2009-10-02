@@ -67,7 +67,6 @@
 #include "browserapplication.h"
 #include "browsermainwindow.h"
 #include "networkaccessmanager.h"
-#include "opensearchdialog.h"
 #include "opensearchengine.h"
 #include "opensearchengineaction.h"
 #include "opensearchmanager.h"
@@ -343,9 +342,8 @@ void ToolbarSearch::showEnginesMenu()
     }
 
     menu.addSeparator();
-    QAction *showManager = menu.addAction(tr("Configure Search Engines..."));
-    connect(showManager, SIGNAL(triggered()),
-            this, SLOT(showDialog()));
+    if (BrowserMainWindow *window = BrowserMainWindow::parentWindow(this))
+        menu.addAction(window->searchManagerAction());
 
     if (!m_recentSearches.empty())
         menu.addAction(tr("Clear Recent Searches"), this, SLOT(clear()));
@@ -374,17 +372,6 @@ void ToolbarSearch::addEngineFromUrl()
     openSearchManager()->addEngine(url);
 }
 
-void ToolbarSearch::showDialog()
-{
-    BrowserMainWindow *window = BrowserMainWindow::parentWindow(this);
-
-    if (!window)
-        return;
-
-    OpenSearchDialog dialog(window);
-    dialog.exec();
-}
-
 void ToolbarSearch::setupList()
 {
     if (m_suggestions.isEmpty()
@@ -393,7 +380,7 @@ void ToolbarSearch::setupList()
         m_model->clear();
         m_suggestionsItem = 0;
     } else {
-        m_model->removeRows(1, m_model->rowCount() -1 );
+        m_model->removeRows(1, m_model->rowCount() - 1);
     }
 
     QFont lightFont;

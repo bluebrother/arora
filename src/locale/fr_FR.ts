@@ -72,6 +72,75 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
+    <name>AdBlockBlockedNetworkReply</name>
+    <message>
+        <source>Blocked by AdBlockRule: %1</source>
+        <translation>Bloqué par la règle AdBlock: %1</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockDialog</name>
+    <message>
+        <source>Add Custom Rule</source>
+        <translation>Ajouter une règle personnalisée</translation>
+    </message>
+    <message>
+        <source>Learn more about writing rules...</source>
+        <translation>En savoir plus sur l&apos;écriture de règles...</translation>
+    </message>
+    <message>
+        <source>Update Subscription</source>
+        <translation>Mettre à jour l&apos;abonnement</translation>
+    </message>
+    <message>
+        <source>Browse Subscriptions...</source>
+        <translation>Parcourir les abonnements...</translation>
+    </message>
+    <message>
+        <source>Remove Subscription</source>
+        <translation>Supprimer un abonnement</translation>
+    </message>
+    <message>
+        <source>AdBlock Configuration</source>
+        <translation>Configuration d&apos;AdBlock</translation>
+    </message>
+    <message>
+        <source>Enable AdBlock</source>
+        <translation>Activer AdBlock</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Action</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockManager</name>
+    <message>
+        <source>Custom Rules</source>
+        <translation>Règles personnalisées</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockModel</name>
+    <message>
+        <source>Rule</source>
+        <translation>Règle</translation>
+    </message>
+</context>
+<context>
+    <name>AdBlockSchemeAccessHandler</name>
+    <message>
+        <source>Subscribe?</source>
+        <translation>S&apos;abonner ?</translation>
+    </message>
+    <message>
+        <source>Subscribe to this AdBlock subscription?
+%1</source>
+        <translation>Souscrire à cet abonnement AdBlock ?
+%1</translation>
+    </message>
+</context>
+<context>
     <name>AddBookmarkDialog</name>
     <message>
         <source>Add Bookmark</source>
@@ -92,6 +161,47 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Add Folder</source>
         <translation>Ajouter un dossier</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillDialog</name>
+    <message>
+        <source>Form Passwords</source>
+        <translation>Mots de passe</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Remove All</source>
+        <translation>Supprimer tout</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillManager</name>
+    <message>
+        <source>&lt;b&gt;Would you like to save this password?&lt;/b&gt;&lt;br&gt;         To review passwords you have saved and remove them, open the AutoFill pane of preferences.</source>
+        <translation>&lt;b&gt;Voulez-vous sauvegarder ce mot de passe ?&lt;/b&gt;&lt;br&gt;         Pour voir les mots de passe que vous avez sauvegardé et en supprimer, ouvrez le panneau Complétion automatique dans les préférences.</translation>
+    </message>
+    <message>
+        <source>Never for this site</source>
+        <translation>Jamais pour ce site</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>Pas maintenant</translation>
+    </message>
+</context>
+<context>
+    <name>AutoFillModel</name>
+    <message>
+        <source>WebSite</source>
+        <translation>Site web</translation>
+    </message>
+    <message>
+        <source>User Name</source>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
 </context>
 <context>
@@ -268,7 +378,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Bookmarks</source>
-        <translation>Marque-pages</translation>
+        <translation type="obsolete">Marque-pages</translation>
     </message>
 </context>
 <context>
@@ -285,7 +395,11 @@ Voulez-vous tout de même quitter?</translation>
     </message>
     <message>
         <source>The saved session will not be restored because Arora crashed while trying to restore this session.</source>
-        <translation>La session enregistrée ne sera pas restaurée car Arora s&apos;est anormalement arrêté lors de la précedente tentative de restauration.</translation>
+        <translation type="obsolete">La session enregistrée ne sera pas restaurée car Arora s&apos;est anormalement arrêté lors de la précedente tentative de restauration.</translation>
+    </message>
+    <message>
+        <source>Arora crashed while trying to restore this session.  Should I try again?</source>
+        <translation>Arora s&apos;est planté lors de la restauration de la session.  Voulez-vous réessayer ?</translation>
     </message>
 </context>
 <context>
@@ -548,7 +662,7 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>Prefere&amp;nces...</source>
-        <translation>Préféren&amp;ces...</translation>
+        <translation type="obsolete">Préféren&amp;ces...</translation>
     </message>
     <message>
         <source>Show Menu Bar</source>
@@ -614,7 +728,59 @@ Do you want to reload all pages?</source>
     </message>
     <message>
         <source>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;When private browsing is turned on, some actions concerning your privacy will be disabled:&lt;ul&gt;&lt;li&gt; Webpages are not added to the history.&lt;/li&gt;&lt;li&gt; Items are automatically removed from the Downloads window.&lt;/li&gt;&lt;li&gt; New cookies are not stored, current cookies can&apos;t be accessed.&lt;/li&gt;&lt;li&gt; Site icons won&apos;t be stored, session won&apos;t be saved.&lt;/li&gt;&lt;li&gt; Searches are not added to the pop-up menu in the search box.&lt;/li&gt;&lt;li&gt; No new network cache is written to disk.&lt;/li&gt;&lt;/ul&gt;Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
-        <translation>&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Lorsque la navigation privée est activé, certaines actions qui concernent votre vie privée seront désactivés:&lt;ul&gt;&lt;li&gt; Les sites consultés ne seront pas ajoutés à l&apos;historique.&lt;/li&gt;&lt;li&gt; Les téléchargements seront automatiquement supprimés de la fenêtre des téléchargements.&lt;/li&gt;&lt;li&gt; Les nouveaux cookies ne seront pas stockés, les cookies actuels ne peuvent pas être accédés.&lt;/li&gt;&lt;li&gt; Les icônes des sites web ne seront pas stockés, la session ne sera pas sauvegardé.&lt;/li&gt;&lt;li&gt; Les recherches effectuées ne seront pas ajoutés aux recherches récentes.&lt;/li&gt;&lt;li&gt;Le cache sera désactivé.&lt;/li&gt;&lt;/ul&gt;Vous pourrez toujours utiliser les boutons Précédent et Suivant pour naviguer dans les pages que vous avez ouvert, jusqu&apos;à ce que vous fermiez la fenêtre.</translation>
+        <translation type="obsolete">&lt;b&gt;%1&lt;/b&gt;&lt;br&gt;&lt;br&gt;Lorsque la navigation privée est activé, certaines actions qui concernent votre vie privée seront désactivés:&lt;ul&gt;&lt;li&gt; Les sites consultés ne seront pas ajoutés à l&apos;historique.&lt;/li&gt;&lt;li&gt; Les téléchargements seront automatiquement supprimés de la fenêtre des téléchargements.&lt;/li&gt;&lt;li&gt; Les nouveaux cookies ne seront pas stockés, les cookies actuels ne peuvent pas être accédés.&lt;/li&gt;&lt;li&gt; Les icônes des sites web ne seront pas stockés, la session ne sera pas sauvegardé.&lt;/li&gt;&lt;li&gt; Les recherches effectuées ne seront pas ajoutés aux recherches récentes.&lt;/li&gt;&lt;li&gt;Le cache sera désactivé.&lt;/li&gt;&lt;/ul&gt;Vous pourrez toujours utiliser les boutons Précédent et Suivant pour naviguer dans les pages que vous avez ouvert, jusqu&apos;à ce que vous fermiez la fenêtre.</translation>
+    </message>
+    <message>
+        <source>Options...</source>
+        <translation>Options...</translation>
+    </message>
+    <message>
+        <source>Configure Search Engines...</source>
+        <translation>Configurer les moteurs de recherche...</translation>
+    </message>
+    <message>
+        <source>&amp;Ad Block...</source>
+        <translation>&amp;AdBlock...</translation>
+    </message>
+    <message>
+        <source>When private browsing is turned on, some actions concerning your privacy will be disabled:</source>
+        <translation>Lorsque la navigation privée est activée, certaines actions concernant votre vie privée seront désactivées:</translation>
+    </message>
+    <message>
+        <source>Webpages are not added to the history.</source>
+        <translation>Les pages visités ne sont pas ajoutées à l&apos;historique.</translation>
+    </message>
+    <message>
+        <source>Items are automatically removed from the Downloads window.</source>
+        <translation>Les téléchargements sont automatiquement supprimés du gestionnaire de téléchargement.</translation>
+    </message>
+    <message>
+        <source>New cookies are not stored, current cookies can&apos;t be accessed.</source>
+        <translation>Aucun nouveau cookie n&apos;est stocké, les cookies actuels ne sont pas accessibles.</translation>
+    </message>
+    <message>
+        <source>Site icons won&apos;t be stored.</source>
+        <translation>Les icônes des sites web ne sont pas stockées.</translation>
+    </message>
+    <message>
+        <source>Session won&apos;t be saved.</source>
+        <translation>La session n&apos;est pas sauvegardée.</translation>
+    </message>
+    <message>
+        <source>Searches are not added to the pop-up menu in the search box.</source>
+        <translation>Les recherches effectuées ne sont pas ajoutées dans la liste déroulante des recherches.</translation>
+    </message>
+    <message>
+        <source>No new network cache is written to disk.</source>
+        <translation>Le cache réseau est désactivé.</translation>
+    </message>
+    <message>
+        <source>Until you close the window, you can still click the Back and Forward buttons to return to the webpages you have opened.</source>
+        <translation>Vous pourrez toujours cliquer sur Précédent et Suivant pour naviguer dans les pages web ouvertes, jusqu&apos;à ce que vous fermiez la fenêtre.</translation>
+    </message>
+    <message>
+        <source>Private Browsing</source>
+        <translation>Navigation privée</translation>
     </message>
 </context>
 <context>
@@ -1070,7 +1236,11 @@ Voulez-vous tout de même quitter?</translation>
     </message>
     <message>
         <source>No translation files are installed.</source>
-        <translation>Aucun fichier de traduction n&apos;est installé.</translation>
+        <translation type="obsolete">Aucun fichier de traduction n&apos;est installé.</translation>
+    </message>
+    <message>
+        <source>No translation files are installed at %1.</source>
+        <translation>Aucun fichier de traduction n&apos;est installé à %1.</translation>
     </message>
 </context>
 <context>
@@ -1561,6 +1731,54 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
         <source>Choose Directory...</source>
         <translation>Choisir le répertoire...</translation>
     </message>
+    <message>
+        <source>A cookie session ends:</source>
+        <translation>Un cookie de session se termine:</translation>
+    </message>
+    <message>
+        <source>When I exit the application</source>
+        <translation>Quand je ferme l&apos;application</translation>
+    </message>
+    <message>
+        <source>1 day</source>
+        <translation>Après 1 jour</translation>
+    </message>
+    <message>
+        <source>2 days</source>
+        <translation>Après 2 jours</translation>
+    </message>
+    <message>
+        <source>3 days</source>
+        <translation>Après 3 jours</translation>
+    </message>
+    <message>
+        <source>7 days</source>
+        <translation>Après 7 jours</translation>
+    </message>
+    <message>
+        <source>30 days</source>
+        <translation>Après 30 jours</translation>
+    </message>
+    <message>
+        <source>AutoFill</source>
+        <translation>Complétion automatique</translation>
+    </message>
+    <message>
+        <source>AutoFill web forms:</source>
+        <translation>Formulaires complétés automatiquement:</translation>
+    </message>
+    <message>
+        <source>User names and passwords</source>
+        <translation>Noms d&apos;utilisateur et mots de passe</translation>
+    </message>
+    <message>
+        <source>Edit...</source>
+        <translation>Édition...</translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
+    </message>
 </context>
 <context>
     <name>SettingsDialog</name>
@@ -1575,6 +1793,10 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     <message>
         <source>Choose Directory</source>
         <translation>Choisir le répertoire</translation>
+    </message>
+    <message>
+        <source>Choose CSS File</source>
+        <translation>Choisir le fichier CSS</translation>
     </message>
 </context>
 <context>
@@ -1593,11 +1815,11 @@ Voulez-vous ignorer ces erreurs?&lt;/qt&gt;</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Affichage</translation>
+        <translation type="obsolete">&amp;Affichage</translation>
     </message>
     <message>
         <source>&amp;Wrap lines</source>
-        <translation>Retours à la ligne &amp;statiques</translation>
+        <translation type="obsolete">Retours à la ligne &amp;statiques</translation>
     </message>
     <message>
         <source>Source of Page %1</source>
@@ -1726,7 +1948,7 @@ Voulez-vous vraiment fermer cette page?
     </message>
     <message>
         <source>Configure Search Engines...</source>
-        <translation>Configurer les moteurs de recherche...</translation>
+        <translation type="obsolete">Configurer les moteurs de recherche...</translation>
     </message>
     <message>
         <source>Clear Recent Searches</source>
@@ -1841,6 +2063,10 @@ Voulez-vous vraiment fermer cette page?
     <message>
         <source>Type in a name for the engine</source>
         <translation>Insérer un nom pour le moteur</translation>
+    </message>
+    <message>
+        <source>Block Image</source>
+        <translation>Bloquer l&apos;image</translation>
     </message>
 </context>
 <context>

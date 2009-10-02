@@ -62,7 +62,11 @@
 
 #include "networkaccessmanager.h"
 
+#include "adblockmanager.h"
+#include "adblocknetwork.h"
+#include "adblockschemeaccesshandler.h"
 #include "acceptlanguagedialog.h"
+#include "autofillmanager.h"
 #include "browserapplication.h"
 #include "browsermainwindow.h"
 #include "cookiejar.h"
@@ -84,8 +88,11 @@
 #include <qsslerror.h>
 #include <qdatetime.h>
 
+// #define NETWORKACCESSMANAGER_DEBUG
+
 NetworkAccessManager::NetworkAccessManager(QObject *parent)
-    : QNetworkAccessManager(parent)
+    : NetworkAccessManagerProxy(parent)
+    , m_adblockNetwork(0)
 {
     connect(this, SIGNAL(authenticationRequired(QNetworkReply*, QAuthenticator*)),
             SLOT(authenticationRequired(QNetworkReply*, QAuthenticator*)));
@@ -101,6 +108,7 @@ NetworkAccessManager::NetworkAccessManager(QObject *parent)
 
     // Register custom scheme handlers
     setSchemeHandler(QLatin1String("file"), new FileAccessHandler(this));
+    setSchemeHandler(QLatin1String("abp"), new AdBlockSchemeAccessHandler(this));
     setCookieJar(new CookieJar);
 }
 
@@ -159,7 +167,6 @@ void NetworkAccessManager::loadSettings()
     QList<QSslCertificate> ca_list = sslCfg.caCertificates();
     QList<QSslCertificate> ca_new = QSslCertificate::fromData(settings.value(QLatin1String("CaCertificates")).toByteArray());
     ca_list += ca_new;
-
     sslCfg.setCaCertificates(ca_list);
     QSslConfiguration::setDefaultConfiguration(sslCfg);
 #endif
@@ -190,6 +197,9 @@ void NetworkAccessManager::loadSettings()
 
 void NetworkAccessManager::authenticationRequired(QNetworkReply *reply, QAuthenticator *auth)
 {
+#ifdef NETWORKACCESSMANAGER_DEBUG
+    qDebug() << __FUNCTION__ << reply;
+#endif
     BrowserMainWindow *mainWindow = BrowserApplication::instance()->mainWindow();
 
     QDialog dialog(mainWindow);
@@ -214,6 +224,9 @@ void NetworkAccessManager::authenticationRequired(QNetworkReply *reply, QAuthent
 
 void NetworkAccessManager::proxyAuthenticationRequired(const QNetworkProxy &proxy, QAuthenticator *auth)
 {
+#ifdef NETWORKACCESSMANAGER_DEBUG
+    qDebug() << __FUNCTION__;
+#endif
     BrowserMainWindow *mainWindow = BrowserApplication::instance()->mainWindow();
 
     QDialog dialog(mainWindow);
@@ -263,6 +276,9 @@ QString NetworkAccessManager::certToFormattedString(QSslCertificate cert)
 
 void NetworkAccessManager::sslErrors(QNetworkReply *reply, const QList<QSslError> &error)
 {
+#ifdef NETWORKACCESSMANAGER_DEBUG
+    qDebug() << __FUNCTION__;
+#endif
     BrowserMainWindow *mainWindow = BrowserApplication::instance()->mainWindow();
 
     QSettings settings;
@@ -327,8 +343,12 @@ void NetworkAccessManager::sslErrors(QNetworkReply *reply, const QList<QSslError
 
 QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operation op, const QNetworkRequest &request, QIODevice *outgoingData)
 {
-    QNetworkReply *reply = 0;
+    if (op == PostOperation && outgoingData) {
+        QByteArray outgoingDataByteArray = outgoingData->peek(1024 * 1024);
+        BrowserApplication::autoFillManager()->post(request, outgoingDataByteArray);
+    }
 
+    QNetworkReply *reply = 0;
     // Check if there is a valid handler registered for the requested URL scheme
     if (m_schemeHandlers.contains(request.url().scheme()))
         reply = m_schemeHandlers[request.url().scheme()]->createRequest(op, request, outgoingData);
@@ -342,7 +362,17 @@ QNetworkReply *NetworkAccessManager::createRequest(QNetworkAccessManager::Operat
     if (!m_acceptLanguage.isEmpty())
         req.setRawHeader("Accept-Language", m_acceptLanguage);
 
+    // Adblock
+    if (op == QNetworkAccessManager::GetOperation) {
+        if (!m_adblockNetwork)
+            m_adblockNetwork = AdBlockManager::instance()->network();
+        reply = m_adblockNetwork->block(req);
+        if (reply)
+            return reply;
+    }
+
     reply = QNetworkAccessManager::createRequest(op, req, outgoingData);
     emit requestCreated(op, req, reply);
     return reply;
 }
+

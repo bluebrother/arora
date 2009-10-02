@@ -64,6 +64,10 @@
 
 #include "webview.h"
 
+#include "adblockdialog.h"
+#include "adblockmanager.h"
+#include "adblockpage.h"
+#include "autofillmanager.h"
 #include "addbookmarkdialog.h"
 #include "bookmarksmanager.h"
 #include "browserapplication.h"
@@ -79,6 +83,7 @@
 #include <qdebug.h>
 #include <qevent.h>
 #include <qmenubar.h>
+#include <qtimer.h>
 #include <qwebframe.h>
 
 #if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
@@ -98,7 +103,7 @@ WebView::WebView(QWidget *parent)
     , m_progress(0)
     , m_currentZoom(100)
     , m_page(new WebPage(this))
-#ifdef WEBKIT_TRUNK
+#if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
     , m_enableAccessKeys(true)
     , m_accessKeysPressed(false)
 #endif
@@ -129,6 +134,7 @@ WebView::WebView(QWidget *parent)
     connect(m_page, SIGNAL(scrollRequested(int, int, const QRect &)),
             this, SLOT(hideAccessKeys()));
 #endif
+    loadSettings();
 }
 
 void WebView::loadSettings()
@@ -223,6 +229,8 @@ void WebView::contextMenuEvent(QContextMenuEvent *event)
         menu->addAction(tr("&Save Image"), this, SLOT(downloadImageToDisk()));
         menu->addAction(tr("&Copy Image"), this, SLOT(copyImageToClipboard()));
         menu->addAction(tr("C&opy Image Location"), this, SLOT(copyImageLocationToClipboard()))->setData(r.imageUrl().toString());
+        menu->addSeparator();
+        menu->addAction(tr("Block Image"), this, SLOT(blockImage()))->setData(r.imageUrl().toString());
     }
 
     if (!page()->selectedText().isEmpty()) {
@@ -360,6 +368,15 @@ void WebView::copyImageLocationToClipboard()
     }
 }
 
+void WebView::blockImage()
+{
+    if (QAction *action = qobject_cast<QAction*>(sender())) {
+        QString imageUrl = action->data().toString();
+        AdBlockDialog *dialog = AdBlockManager::instance()->showDialog();
+        dialog->addCustomRule(imageUrl);
+    }
+}
+
 void WebView::bookmarkLink()
 {
     if (QAction *action = qobject_cast<QAction*>(sender())) {
@@ -414,10 +431,10 @@ void WebView::addSearchEngine()
     QUrl searchUrl(page()->mainFrame()->baseUrl().resolved(QUrl(formElement.attribute(QLatin1String("action")))));
     QMap<QString, QString> searchEngines;
     QList<QWebElement> inputFields = formElement.findAll(QLatin1String("input"));
-    foreach (const QWebElement &inputField, inputFields) {
+    foreach (QWebElement inputField, inputFields) {
         QString type = inputField.attribute(QLatin1String("type"), QLatin1String("text"));
         QString name = inputField.attribute(QLatin1String("name"));
-        QString value = inputField.scriptableProperty(QLatin1String("value")).toString();
+        QString value = inputField.evaluateJavaScript(QLatin1String("this.value")).toString();
 
         if (type == QLatin1String("submit")) {
             searchEngines.insert(value, name);
@@ -427,7 +444,7 @@ void WebView::addSearchEngine()
 
             searchUrl.addQueryItem(name, value);
         } else if (type == QLatin1String("checkbox") || type == QLatin1String("radio")) {
-            if (inputField.scriptableProperty(QLatin1String("checked")).toBool()) {
+            if (inputField.evaluateJavaScript(QLatin1String("this.checked")).toBool()) {
                 searchUrl.addQueryItem(name, value);
             }
         } else if (type == QLatin1String("hidden")) {
@@ -436,9 +453,9 @@ void WebView::addSearchEngine()
     }
 
     QList<QWebElement> selectFields = formElement.findAll(QLatin1String("select"));
-    foreach (const QWebElement &selectField, selectFields) {
+    foreach (QWebElement selectField, selectFields) {
         QString name = selectField.attribute(QLatin1String("name"));
-        int selectedIndex = selectField.scriptableProperty(QLatin1String("selectedIndex")).toInt();
+        int selectedIndex = selectField.evaluateJavaScript(QLatin1String("this.selectedIndex")).toInt();
         if (selectedIndex == -1)
             continue;
 
@@ -542,6 +559,8 @@ void WebView::loadFinished()
                    << "Url:" << url();
     }
     m_progress = 0;
+    AdBlockManager::instance()->page()->applyRulesToPage(page());
+    BrowserApplication::instance()->autoFillManager()->fill(page());
 }
 
 void WebView::loadUrl(const QUrl &url, const QString &title)
@@ -670,6 +689,8 @@ void WebView::keyPressEvent(QKeyEvent *event)
                 return;
             }
             hideAccessKeys();
+        } else {
+            QTimer::singleShot(200, this, SLOT(accessKeyShortcut()));
         }
     }
 #endif
@@ -696,17 +717,24 @@ void WebView::keyPressEvent(QKeyEvent *event)
 }
 
 #if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
+void WebView::accessKeyShortcut()
+{
+    if (!hasFocus()
+        || !m_accessKeysPressed
+        || !m_enableAccessKeys)
+        return;
+    if (m_accessKeyLabels.isEmpty()) {
+        showAccessKeys();
+    } else {
+        hideAccessKeys();
+    }
+    m_accessKeysPressed = false;
+}
+
 void WebView::keyReleaseEvent(QKeyEvent *event)
 {
-    if (m_accessKeysPressed) {
-        if (m_accessKeyLabels.isEmpty()) {
-            showAccessKeys();
-        } else {
-            hideAccessKeys();
-        }
-        m_accessKeysPressed = false;
-    }
-
+    if (m_enableAccessKeys)
+        m_accessKeysPressed = event->key() == Qt::Key_Control;
     QWebView::keyReleaseEvent(event);
 }
 

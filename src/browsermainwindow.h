@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Benjamin C. Meyer <ben@meyerhome.net>
+ * Copyright 2008-2009 Benjamin C. Meyer <ben@meyerhome.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -64,12 +64,9 @@
 #define BROWSERMAINWINDOW_H
 
 #include <qmainwindow.h>
-#include <qicon.h>
-#include <qurl.h>
 
 class AutoSaver;
 class BookmarksToolBar;
-class ChaseWidget;
 class QWebFrame;
 class TabWidget;
 class ToolbarSearch;
@@ -78,7 +75,6 @@ class QSplitter;
 class QFrame;
 class HistoryMenu;
 class BookmarksMenuBarMenu;
-
 
 /*!
     The MainWindow of the Browser Application.
@@ -103,6 +99,7 @@ public:
     QByteArray saveState(bool withTabs = true) const;
     bool restoreState(const QByteArray &state);
     QAction *showMenuBarAction() const;
+    QAction *searchManagerAction() const { return m_toolsSearchManagerAction; }
 
 public slots:
     void goHome();
@@ -161,6 +158,7 @@ private slots:
     void aboutToShowWindowMenu();
     void aboutToShowTextEncodingMenu();
     void openActionUrl(QAction *action);
+    void showSearchDialog();
     void showWindow();
     void swapFocus();
 
@@ -197,7 +195,6 @@ private:
     QAction *m_editFindAction;
     QAction *m_editFindNextAction;
     QAction *m_editFindPreviousAction;
-    QAction *m_editPreferencesAction;
 
     QMenu *m_viewMenu;
     QAction *m_viewShowMenuBarAction;
@@ -231,7 +228,10 @@ private:
     QMenu *m_toolsMenu;
     QAction *m_toolsWebSearchAction;
     QAction *m_toolsClearPrivateDataAction;
-    QAction *m_toolsEnableInspector;
+    QAction *m_toolsEnableInspectorAction;
+    QAction *m_toolsPreferencesAction;
+    QAction *m_toolsSearchManagerAction;
+    QAction *m_adBlockDialogAction;
 
     QMenu *m_helpMenu;
     QAction *m_helpChangeLanguageAction;

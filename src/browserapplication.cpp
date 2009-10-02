@@ -63,6 +63,7 @@
 #include "browserapplication.h"
 
 #include "autosaver.h"
+#include "autofillmanager.h"
 #include "bookmarksmanager.h"
 #include "browsermainwindow.h"
 #include "cookiejar.h"
@@ -78,17 +79,25 @@
 #include <qdir.h>
 #include <qevent.h>
 #include <qlibraryinfo.h>
+#include <qlocalsocket.h>
 #include <qmessagebox.h>
 #include <qsettings.h>
 #include <qwebsettings.h>
 
 #include <qdebug.h>
 
+#ifdef Q_OS_WIN
+#include <windows.h>
+#endif
+
+// #define BROWSERAPPLICATION_DEBUG
+
 DownloadManager *BrowserApplication::s_downloadManager = 0;
 HistoryManager *BrowserApplication::s_historyManager = 0;
 NetworkAccessManager *BrowserApplication::s_networkAccessManager = 0;
 BookmarksManager *BrowserApplication::s_bookmarksManager = 0;
 LanguageManager *BrowserApplication::s_languageManager = 0;
+AutoFillManager *BrowserApplication::s_autoFillManager = 0;
 
 BrowserApplication::BrowserApplication(int &argc, char **argv)
     : SingleApplication(argc, argv)
@@ -96,7 +105,7 @@ BrowserApplication::BrowserApplication(int &argc, char **argv)
 {
     QCoreApplication::setOrganizationDomain(QLatin1String("arora-browser.org"));
     QCoreApplication::setApplicationName(QLatin1String("Arora"));
-    QString version = QLatin1String("0.9.0");
+    QString version = QLatin1String("0.10.0");
     QString gitVersion = QLatin1String(GITCHANGENUMBER);
     if (gitVersion != QLatin1String("0")
         && !gitVersion.isEmpty())
@@ -106,15 +115,26 @@ BrowserApplication::BrowserApplication(int &argc, char **argv)
 
     QCoreApplication::setApplicationVersion(version);
 #ifndef AUTOTESTS
+    connect(this, SIGNAL(messageReceived(QLocalSocket *)),
+            this, SLOT(messageReceived(QLocalSocket *)));
+
     QStringList args = QCoreApplication::arguments();
-    QString message = (args.count() > 1) ? parseArgumentUrl(args.last()) : QString();
-    if (sendMessage(message))
+    if (args.count() > 1) {
+        QString message = parseArgumentUrl(args.last());
+        sendMessage(message.toUtf8());
+    }
+    // If we could connect to another Arora then exit
+    QString message = QString(QLatin1String("aroramessage://getwinid"));
+    if (sendMessage(message.toUtf8(), 500))
         return;
+
+#ifdef BROWSERAPPLICATION_DEBUG
+    qDebug() << "BrowserApplication::" << __FUNCTION__ << "I am the only arora";
+#endif
+
     // not sure what else to do...
     if (!startSingleServer())
         return;
-    connect(this, SIGNAL(messageReceived(const QString &)),
-            this, SLOT(messageReceived(const QString &)));
 #endif
 
 #if defined(Q_WS_MAC)
@@ -158,6 +178,7 @@ BrowserApplication::~BrowserApplication()
     delete s_bookmarksManager;
     delete s_languageManager;
     delete s_historyManager;
+    delete s_autoFillManager;
 }
 
 #if defined(Q_WS_MAC)
@@ -192,22 +213,63 @@ QString BrowserApplication::parseArgumentUrl(const QString &string) const
     return string;
 }
 
-void BrowserApplication::messageReceived(const QString &message)
+void BrowserApplication::messageReceived(QLocalSocket *socket)
 {
-    if (!message.isEmpty()) {
+    QString message;
+    QTextStream stream(socket);
+    stream >> message;
+#ifdef BROWSERAPPLICATION_DEBUG
+    qDebug() << "BrowserApplication::" << __FUNCTION__ << message;
+#endif
+    if (message.isEmpty())
+        return;
+
+    // Got a normal url
+    if (!message.startsWith(QLatin1String("aroramessage://"))) {
         QSettings settings;
         settings.beginGroup(QLatin1String("tabs"));
         TabWidget::OpenUrlIn tab = TabWidget::OpenUrlIn(settings.value(QLatin1String("openLinksFromAppsIn"), TabWidget::NewSelectedTab).toInt());
         settings.endGroup();
         if (QUrl(message) == m_lastAskedUrl
-            && m_lastAskedUrlDateTime.addSecs(10) > QDateTime::currentDateTime()) {
+                && m_lastAskedUrlDateTime.addSecs(10) > QDateTime::currentDateTime()) {
             qWarning() << "Possible recursive openUrl called, ignoring url:" << m_lastAskedUrl;
             return;
         }
         mainWindow()->tabWidget()->loadString(message, tab);
+        return;
     }
-    mainWindow()->raise();
-    mainWindow()->activateWindow();
+
+    if (message.startsWith(QLatin1String("aroramessage://getwinid"))) {
+#ifdef Q_OS_WIN
+        QString winid = QString(QLatin1String("%1")).arg((qlonglong)mainWindow()->winId());
+#else
+        mainWindow()->show();
+        mainWindow()->setFocus();
+        mainWindow()->raise();
+        mainWindow()->activateWindow();
+        alert(mainWindow());
+        QString winid;
+#endif
+#ifdef BROWSERAPPLICATION_DEBUG
+        qDebug() << "BrowserApplication::" << __FUNCTION__ << "sending win id" << winid << mainWindow()->winId();
+#endif
+        QString message = QLatin1String("aroramessage://winid/") + winid;
+        socket->write(message.toUtf8());
+        socket->waitForBytesWritten();
+        return;
+    }
+
+    if (message.startsWith(QLatin1String("aroramessage://winid"))) {
+        QString winid = message.mid(21);
+#ifdef BROWSERAPPLICATION_DEBUG
+        qDebug() << "BrowserApplication::" << __FUNCTION__ << "got win id:" << winid;
+#endif
+#ifdef Q_OS_WIN
+        WId wid = (WId)winid.toLongLong();
+        SetForegroundWindow(wid);
+#endif
+        return;
+    }
 }
 
 void BrowserApplication::quitBrowser()
@@ -314,12 +376,15 @@ void BrowserApplication::loadSettings()
     defaultSettings->setAttribute(QWebSettings::PluginsEnabled, settings.value(QLatin1String("enablePlugins"), true).toBool());
     defaultSettings->setAttribute(QWebSettings::AutoLoadImages, settings.value(QLatin1String("enableImages"), true).toBool());
     defaultSettings->setAttribute(QWebSettings::DeveloperExtrasEnabled, settings.value(QLatin1String("enableInspector"), false).toBool());
-#ifdef WEBKIT_TRUNK
+#if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
     defaultSettings->setAttribute(QWebSettings::DnsPrefetchEnabled, true);
 #endif
 
     QUrl url = settings.value(QLatin1String("userStyleSheet")).toUrl();
     defaultSettings->setUserStyleSheetUrl(url);
+
+    int maximumPagesInCache = settings.value(QLatin1String("maximumPagesInCache"), 3).toInt();
+    QWebSettings::globalSettings()->setMaximumPagesInCache(maximumPagesInCache);
 
     settings.endGroup();
 }
@@ -400,9 +465,10 @@ bool BrowserApplication::restoreLastSession()
         QSettings settings;
         settings.beginGroup(QLatin1String("MainWindow"));
         if (settings.value(QLatin1String("restoring"), false).toBool()) {
-            QMessageBox::information(0, tr("Restore failed"),
-                tr("The saved session will not be restored because Arora crashed while trying to restore this session."));
-            return false;
+            QMessageBox::StandardButton result = QMessageBox::question(0, tr("Restore failed"),
+                tr("Arora crashed while trying to restore this session.  Should I try again?"), QMessageBox::Yes | QMessageBox::No);
+            if (result == QMessageBox::No)
+                return false;
         }
         // saveSession will be called by an AutoSaver timer from the set tabs
         // and in saveSession we will reset this flag back to false
@@ -546,11 +612,23 @@ BookmarksManager *BrowserApplication::bookmarksManager()
 LanguageManager *BrowserApplication::languageManager()
 {
     if (!s_languageManager) {
-        s_languageManager = new LanguageManager(installedDataDirectory());
+        s_languageManager = new LanguageManager();
+        s_languageManager->addLocaleDirectory(dataFilePath(QLatin1String("locale")));
+        s_languageManager->addLocaleDirectory(qApp->applicationDirPath() + QLatin1String("/src/.qm/locale"));
+        s_languageManager->addLocaleDirectory(installedDataDirectory() + QLatin1String("/locale"));
+        s_languageManager->loadLanguageFromSettings();
         connect(s_languageManager, SIGNAL(languageChanged(const QString &)),
                 qApp, SLOT(retranslate()));
     }
     return s_languageManager;
+}
+
+AutoFillManager *BrowserApplication::autoFillManager()
+{
+    if (!s_autoFillManager) {
+        s_autoFillManager = new AutoFillManager;
+    }
+    return s_autoFillManager;
 }
 
 QIcon BrowserApplication::icon(const QUrl &url)

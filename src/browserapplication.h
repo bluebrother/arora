@@ -65,11 +65,11 @@
 
 #include "singleapplication.h"
 
-#include <qicon.h>
 #include <qpointer.h>
 #include <qurl.h>
 #include <qdatetime.h>
 
+class AutoFillManager;
 class BookmarksManager;
 class BrowserMainWindow;
 class CookieJar;
@@ -77,6 +77,7 @@ class DownloadManager;
 class HistoryManager;
 class NetworkAccessManager;
 class LanguageManager;
+class QLocalSocket;
 class BrowserApplication : public SingleApplication
 {
     Q_OBJECT
@@ -102,6 +103,8 @@ public:
     static NetworkAccessManager *networkAccessManager();
     static BookmarksManager *bookmarksManager();
     static LanguageManager *languageManager();
+    static AutoFillManager *autoFillManager();
+
     static QString installedDataDirectory();
     static QString dataFilePath(const QString &fileName);
 
@@ -133,7 +136,7 @@ public slots:
 
 private slots:
     void retranslate();
-    void messageReceived(const QString &message);
+    void messageReceived(QLocalSocket *socket);
     void postLaunch();
     void openUrl(const QUrl &url);
 
@@ -150,6 +153,7 @@ private:
     static NetworkAccessManager *s_networkAccessManager;
     static BookmarksManager *s_bookmarksManager;
     static LanguageManager *s_languageManager;
+    static AutoFillManager *s_autoFillManager;
 
     QList<QPointer<BrowserMainWindow> > m_mainWindows;
     QByteArray m_lastSession;

@@ -137,11 +137,13 @@ private slots:
     void downloadImageToDisk();
     void copyImageToClipboard();
     void copyImageLocationToClipboard();
+    void blockImage();
     void bookmarkLink();
     void searchRequested(QAction *action);
 #if QT_VERSION >= 0x040600 || defined(WEBKIT_TRUNK)
     void addSearchEngine();
     void hideAccessKeys();
+    void accessKeyShortcut();
 #endif
 
 private:

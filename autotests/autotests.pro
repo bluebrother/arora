@@ -1,14 +1,11 @@
 TEMPLATE = subdirs
 SUBDIRS  = \
+    adblock \
     addbookmarkdialog \
     autosaver \
     cookiejar \
-    editlistview \
-    edittreeview \
     historyfiltermodel \
     historymanager \
-    languagemanager \
-    lineedit \
     modeltoolbar \
     opensearchengine \
     opensearchmanager \
@@ -17,6 +14,9 @@ SUBDIRS  = \
     searchlineedit \
     tabbar \
     tabwidget \
+    utils \
     webactionmapper \
     webpage \
     xbel
+
+CONFIG += ordered

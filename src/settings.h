@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Benjamin C. Meyer <ben@meyerhome.net>
+ * Copyright 2008-2009 Benjamin C. Meyer <ben@meyerhome.net>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,6 +87,9 @@ private slots:
     void chooseFont();
     void chooseFixedFont();
     void chooseAcceptLanguage();
+
+    void chooseStyleSheet();
+    void editAutoFillUser();
 
 private:
     QFont m_standardFont;
